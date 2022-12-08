@@ -1,12 +1,13 @@
 # Machine-Learning-Notes
 
-##### Table of Contents  
-[Supervised Learning](#headers)  
-[Unsupervised Learning](#emphasis)  
-...snip...    
-<a name="headers"/>
-
-## Supervised Learning
+# Table of Contents
+1. [Example](#example)
+2. [Example2](#example2)
+3. [Third Example](#third-example)
+4. [Fourth Example](#fourth-examplehttpwwwfourthexamplecom)
 
 
-## Unsupervised Learning
+## Example
+## Example2
+## Third Example
+## [Fourth Example](http://www.fourthexample.com) 
