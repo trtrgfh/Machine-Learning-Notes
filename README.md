@@ -1,34 +1,48 @@
-# Machine-Learning-Notes
+# Machine-Learning
 
-# Table of contents
-1. [Introduction](#introduction)
-2. [Some paragraph](#paragraph1)
-    1. [Sub paragraph](#subparagraph1)
-3. [Another paragraph](#paragraph2)
+## Table of contents
+- [Supervised Learning](#supervisedlearning)
+    1. [Linear Regression](#linearregression)
+    2. [Logistic Regression](#logisticregression)
+    3. [Decision Trees](#decisiontrees)
+    4. [Neural Networks](#neuralnetworks)
+- [Unsupervised Learning](#unsupervisedlearning)
+    1. [K Nearest Neighbor](#knn)
+    2. [Anomaly Detection](#anomalydetection)
+    3. [Collaborative Filtering](#collaborate)
+    4. [Content Filtering](#content)
+- [Gradient Descent](#gradientdescent)
 
-## This is the introduction <a name="introduction"></a>
+## Supervised Learning <a name="supervisedlearning"></a>
 Some introduction text, formatted in heading 2 style
 
-## Some paragraph <a name="paragraph1"></a>
+### Linear Regression <a name="linearregression"></a>
 The first paragraph text
 
-### Sub paragraph <a name="subparagraph1"></a>
+### Logistic Regression <a name="logisticregression"></a>
+The first paragraph text
+
+### Decision Trees <a name="decisiontrees"></a>
+The first paragraph text
+
+### Neural Networks <a name="neuralnetworks"></a>
+The first paragraph text
+
+## Unsupervised Learning <a name="unsupervisedlearning"></a>
 This is a sub paragraph, formatted in heading 3 style
 
-## Another paragraph <a name="paragraph2"></a>
+### K Nearest Neighbor <a name="knn"></a>
 The second paragraph text
 
+### Anomaly Detection <a name="anomalydetection"></a>
+The second paragraph text
 
-# Table of Contents
-1. [Example](#example)
-    1. [Sub](#sub)
-2. [Example2](#example2)
-3. [Third Example](#third-example)
-4. [Fourth Example](#fourth-example)
+### Collaborative Filtering <a name="colaborate"></a>
+The second paragraph text
 
+### Content Filtering <a name="content"></a>
+The second paragraph text
 
-## Example
-### Sub
-## Example2
-## Third Example
-## [Fourth Example](http://www.github.com) 
+## Gradient Descent <a name="gradientdescent"></a>
+This is a sub paragraph, formatted in heading 3 style
+
