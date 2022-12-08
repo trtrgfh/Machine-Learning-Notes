@@ -17,11 +17,11 @@
 Some introduction text, formatted in heading 2 style
 
 ### Linear Regression <a name="linearregression"></a>
-Linear regression Is used to predict the value of a variable based on the value of another variable. The function is in the form f(x^{i}) = w * x^{i} + b and it will fit the data in a straight line.
+Linear regression Is used to predict the value of a variable based on the value of another variable. The function is in the form $f(x^{i}) = wx^{i} + b$ and it will fit the data in a straight line.
 
 ### Logistic Regression <a name="logisticregression"></a>
 Logistic regression is used for classification.
-Start with using the linear regression model, f(x^{i}) = w * x^{i} + b, to predict y given x. Then, substitute the result from the linear regression function into sigmoid function which would map all inputs to values from 0 to 1.
+Start with using the linear regression model, $f(x^{i}) = wx^{i} + b$, to predict y given x. Then, substitute the result from the linear regression function into sigmoid function which would map all inputs to values from 0 to 1.
 
 ### Decision Trees <a name="decisiontrees"></a>
 The first paragraph text
