@@ -17,3 +17,18 @@ This is a sub paragraph, formatted in heading 3 style
 
 ## Another paragraph <a name="paragraph2"></a>
 The second paragraph text
+
+
+# Table of Contents
+1. [Example](#example)
+    1. [Sub](#sub)
+2. [Example2](#example2)
+3. [Third Example](#third-example)
+4. [Fourth Example](#fourth-example)
+
+
+## Example
+### Sub
+## Example2
+## Third Example
+## [Fourth Example](http://www.github.com) 
