@@ -1,4 +1,5 @@
 # Machine-Learning
+Field of study that gives conputers the ability to learn without explicit programed
 
 ## Table of contents
 - [Supervised Learning](#supervisedlearning)
@@ -38,7 +39,7 @@ The second paragraph text
 ### Anomaly Detection <a name="anomalydetection"></a>
 The second paragraph text
 
-### Collaborative Filtering <a name="colaborate"></a>
+### Collaborative Filtering <a name="collaborate"></a>
 The second paragraph text
 
 ### Content Filtering <a name="content"></a>
