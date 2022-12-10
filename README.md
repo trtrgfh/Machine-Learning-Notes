@@ -25,14 +25,25 @@ Field of study that gives conputers the ability to learn without explicit progra
 $$Minimize_{w, b} \ J(w,b) = \sum_{i=1}^m(f_{w,b}(x^i) - y^i)^2$$
 
 ### Logistic Regression <a name="logisticregression"></a>
-- Logistic regression is used to predict the probability of a binary outcome based on one or more independent variables.
+- Logistic regression is a classification method used to predict the probability of a binary outcome based on one or more independent variables.
 - Logistic equation: h(x) = 1 / (1 + e^(-b0 - b1 * x1 - b2 * x2 - ... - bn * xn))
 - We want to maximize the likelihood of the training data i.e. maximize the probability that the predicted value is the same as the target value, $(y * log(f(x)) + (1 - y) * log(1 - f(x)))$.
 - To train the model, cross-entropy loss function is used:
-$$Minimize_{w, b} \ J(w,b) = -1/m \sum_{i=1}^m (y^i * log(f(x^i)) + (1 - y^i) * log(1 - f(x^i)))$$
+$$Minimize_{w, b} \ J(w,b) = -1/m \sum_{i=1}^m (y^i * log(f_{w,b}(x^i)) + (1 - y^i) * log(1 - f_{w,b}(x^i)))$$
 
 ### Decision Trees <a name="decisiontrees"></a>
-The first paragraph text
+- Decision tree is used for both classification and regression
+- Tree like structure where each branch of the tree represents a decision or rule that is used to predict the value of the dependent variable. 
+- Two criterions to measure the impurity of a split and choose a feature to split:
+    - given c is the number of classes, p is the proportion of the examples that belongs to class i for a particular node, and w is the proportion of examples in each branch.
+    1. $$Entropy = \sum_{i=1}^c -p_ilog_2(p_i), \ \ \ \ \ Information\  Gain = H(p_1^{root}) - ((w^{left}H(p_1^{left}) + w^{right}H(p_1^{right}))$$
+    2. $$Gini = 1 - \sum_{i=1}^c p_i^2$$ 
+#### Random Forest Algorithm
+- Using sampling with replacement to create a new training set of size m
+- Train a decision tree on the new dataset, and when choosing a feature to use to split, pick a random subset of k < n features for the algorithm to choose from
+- Repeat the process B times (common choice: 64, 128)
+#### Boosted Trees Intuition
+- When creating a new training set, make it more likely to pick misclassified examples from previously trained trees
 
 ### Neural Networks <a name="neuralnetworks"></a>
 The first paragraph text
