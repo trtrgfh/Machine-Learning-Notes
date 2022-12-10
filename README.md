@@ -38,6 +38,7 @@ $$Minimize_{w, b} \ J(w,b) = -1/m \sum_{i=1}^m (y^i * log(f_{w,b}(x^i)) + (1 - y
     - given c is the number of classes, p is the proportion of the examples that belongs to class i for a particular node, and w is the proportion of examples in each branch.
     1. $$Entropy = \sum_{i=1}^c -p_ilog_2(p_i), \ \ \ \ \ Information\  Gain = H(p_1^{root}) - ((w^{left}H(p_1^{left}) + w^{right}H(p_1^{right}))$$
     2. $$Gini = 1 - \sum_{i=1}^c p_i^2$$ 
+One downside of using only one decision tree is that small changes in the training set could result in a completely different decision tree, so creating multiple trees (tree ensembles) could make the algorithm more robust.
 #### Random Forest Algorithm
 - Using sampling with replacement to create a new training set of size m
 - Train a decision tree on the new dataset, and when choosing a feature to split, pick a random subset of k < n features for the algorithm to choose from
