@@ -8,7 +8,7 @@ Field of study that gives conputers the ability to learn without explicit progra
     3. [Decision Trees](#decisiontrees)
     4. [Neural Networks](#neuralnetworks)
 - [Unsupervised Learning](#unsupervisedlearning)
-    1. [K Nearest Neighbor](#knn)
+    1. [K Means Algorithm](#kmeans)
     2. [Anomaly Detection](#anomalydetection)
     3. [Collaborative Filtering](#collaborate)
     4. [Content Filtering](#content)
@@ -69,7 +69,7 @@ One downside of using only one decision tree is that small changes in the traini
 - Unsupervised learning is when a model is trained on an unlabeled dataset. The model is not provided with correct output examples for a given input, and the goal is to find hidden patterns or structures in the data. 
 - Types of supervised learning: clustering, anomaly detection
 
-### K Means Algorithm <a name="knn"></a>
+### K Means Algorithm <a name="kmeans"></a>
 - K means algorithm attempts to partition the dataset into k clusters and iteratively updating the cluster centroids and reassigning examples to their closest cluster, until the centroids converge. 
 - Randomly pick K examples and set $\mu_1, ..., \mu_k$ equal to these examples.
 - Cost function:
@@ -81,7 +81,8 @@ The second paragraph text
 
 ### Collaborative Filtering <a name="collaborate"></a>
 - Recommend items to you based on ratings of users who gave similar ratings as you
-
+- Cost function:
+$$Minimize_{(w^{(1)}, ..., w^{(n_u)}), (b^{(1)}, ..., b^{(n_u)}), (x^{(1)}, ..., x^{(n_m)})} = \frac{1}{2} \sum_{(i,j):r(i,j)=1} (w^{(j)}x^{(i)} + b^{(j)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum_{j=1}^{n_u} \sum_{k=1}^n (w_k^{(j)})^2 + \frac{\lambda}{2} \sum_{i=1}^{n_m} \sum_{k=1}^n (x_k^{(i)})^2$$
 ### Content Filtering <a name="content"></a>
 - Recommend items to you based on features of user and item to find good match
 
