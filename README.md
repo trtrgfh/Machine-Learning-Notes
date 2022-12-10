@@ -29,7 +29,7 @@ $$Minimize_{w, b} \ J(w,b) = \sum_{i=1}^m(f_{w,b}(x^i) - y^i)^2$$
 - Logistic equation: h(x) = 1 / (1 + e^(-b0 - b1 * x1 - b2 * x2 - ... - bn * xn))
 - We want to maximize the likelihood of the training data i.e. maximize the probability that the predicted value is the same as the target value, $(y * log(f(x)) + (1 - y) * log(1 - f(x)))$.
 - To train the model, cross-entropy loss function is used:
-$$Minimize_{w, b} \ J(w,b) = -1/m \sum_{i=1}^m (y^i * log(f_{w,b}(x^i)) + (1 - y^i) * log(1 - f_{w,b}(x^i)))$$
+$$Minimize_{w, b} \ J(w,b) = -\frac{1}{m} \sum_{i=1}^m (y^i * log(f_{w,b}(x^i)) + (1 - y^i) * log(1 - f_{w,b}(x^i)))$$
 
 ## Decision Trees <a name="decisiontrees"></a>
 - Decision tree is used for both classification and regression
@@ -48,23 +48,42 @@ One downside of using only one decision tree is that small changes in the traini
 - When creating a new training set, make it more likely to pick misclassified examples from previously trained trees
 
 ## Neural Networks <a name="neuralnetworks"></a>
-The first paragraph text
+- Neural networks are designed to mimic the way the human brain processes information.
+- It is composed of multiple interconnected nodes, or "neurons," which process and transmit information. 
+- Activation functions determine the output of a neuron given an input or set of inputs, some common activation functions are
+    - $\sigma(z) = \frac{1}{(1 + e^{-z})}$, tanh(z) = $\frac{(e^z - e^{-z})}{(e^z + e^{-z})}$, relu(z) = $max(0, z)$, leaky relu(z) = $max(0, z) + \alpha * min(0, z)$
+    - If use a linear activation function, then no matter how many layers you have, all it's doing is computing a linear activation function.
+- Forward propagation for layer l:
+    - $Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}$
+    - $A^{[l]} = g^{[l]}(Z^{[l]})$
+- Backward propagation for layer l:
+    - $dZ^{[l]} = dA^{[l]} * g^{[l]'}(Z^{[l]})$
+    - $dW^{[l]} = \frac{1}{m}dZ^{[l]}A^{[l-1]T}$
+    - $db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]},\  axis=1,\  keepdims=True)$
+    - $dA^{[l-1]} = W^{[l]T}dZ^{[l]}$
+- Gradient Descent:
+    - $W^{[l]} = W^{[l]} - \alpha dW^{[l]}$
+    - $b^{[l]} = b^{[l]} - \alpha db^{[l]}$
 
 ## Unsupervised Learning <a name="unsupervisedlearning"></a>
 - Unsupervised learning is when a model is trained on an unlabeled dataset. The model is not provided with correct output examples for a given input, and the goal is to find hidden patterns or structures in the data. 
 - Types of supervised learning: clustering, anomaly detection
 
-### K Nearest Neighbor <a name="knn"></a>
-The second paragraph text
+### K Means Algorithm <a name="knn"></a>
+- K means algorithm attempts to partition the dataset into k clusters and iteratively updating the cluster centroids and reassigning examples to their closest cluster, until the centroids converge. 
+- Randomly pick K examples and set $\mu_1, ..., \mu_k$ equal to these examples.
+- Cost function:
+$$J(c^{(1)}, ..., c^{(m)}, \mu_1, ..., \mu_k) = \frac{1}{m} \sum_{i=1}^m ||x^{(i)} - \mu_c^{(i)}||^2$$
+where $c^{(i)}$ is the index of cluster centroids closest to $x^{(i)}$ and $\mu_k$ is the average of points in cluster k.
 
 ### Anomaly Detection <a name="anomalydetection"></a>
 The second paragraph text
 
 ### Collaborative Filtering <a name="collaborate"></a>
-The second paragraph text
+- Recommend items to you based on ratings of users who gave similar ratings as you
 
 ### Content Filtering <a name="content"></a>
-The second paragraph text
+- Recommend items to you based on features of user and item to find good match
 
 ## Gradient Descent <a name="gradientdescent"></a>
 This is a sub paragraph, formatted in heading 3 style
