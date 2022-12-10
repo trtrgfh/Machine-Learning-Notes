@@ -83,9 +83,16 @@ The second paragraph text
 - Recommend items to you based on ratings of users who gave similar ratings as you
 - Cost function:
 $$Minimize_{(w^{(1)}, ..., w^{(n_u)}), (b^{(1)}, ..., b^{(n_u)}), (x^{(1)}, ..., x^{(n_m)})} = \frac{1}{2} \sum_{(i,j):r(i,j)=1} (w^{(j)}x^{(i)} + b^{(j)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum_{j=1}^{n_u} \sum_{k=1}^n (w_k^{(j)})^2 + \frac{\lambda}{2} \sum_{i=1}^{n_m} \sum_{k=1}^n (x_k^{(i)})^2$$
+Where (i,j) indicates whether user j has rated item i, $n_u$ is the number of users, $n_m$ is the number of items, $n$ is the number of features, 
+- Limitations:
+    - cold start problem: recommend new items with few rates, and recommend items to new users who rated few items.
+    - no natural way to use the side information about items or users
+
 ### Content Filtering <a name="content"></a>
 - Recommend items to you based on features of user and item to find good match
-
+- Cost function:
+$$J = \sum_{(i,j):r(i,j)=1} (v_u^{(j)}v_m^{(i)} - y^{(i,j)})^2$$
+Where $v_u$ is the output vecter of the user neural network and $v_m$ is the output vecter of the item neural network
 ## Gradient Descent <a name="gradientdescent"></a>
 This is a sub paragraph, formatted in heading 3 style
 
