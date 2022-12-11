@@ -106,6 +106,9 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - $v_m$ can be computed in advanced, so only need to compute $v_u$ when in use.
 
 ### Principal Component Analysis <a name="pca"></a>
+- PCA is used to reduce the dimensionality of a dataset so the dataset is easier to visulize and understand. 
+- PCA finds a new set of variables, called principal components, that are linear combinations of the original variables
+- The new variables replace the original variables so that less varibles (dimensions) are used.
 
 ## Techniques to Improve Machine Learning Models <a name="technics"></a>
 
