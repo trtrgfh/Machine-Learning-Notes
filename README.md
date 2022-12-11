@@ -77,13 +77,18 @@ $$J(c^{(1)}, ..., c^{(m)}, \mu_1, ..., \mu_k) = \frac{1}{m} \sum_{i=1}^m ||x^{(i
 where $c^{(i)}$ is the index of cluster centroids closest to $x^{(i)}$ and $\mu_k$ is the average of points in cluster k.
 
 ### Anomaly Detection <a name="anomalydetection"></a>
-The second paragraph text
-
+- Anomaly detection algorithm is trained with dataset of normal events so that it learns to raise a red flag when encounters a unusual event
+- The Gaussian (Normal) distribution is used in anomaly detection.
+    - Bell shape curve
+    - defined as: 
+    $$p(x) = \frac{1}{\sqrt{2\pi}\sigma}e^{\frac{-(x-\mu)^2}{2\sigma^2}}\ \  Where\  \mu_j = \frac{1}{m}\sum_{i=1}^m x_j^{(i)}\  and\  \sigma_j^2 = \frac{1}{m}\sum_{i=1}^m (x_j^{(i)} - \mu_j)^2$$
+    - Anomaly if p(x) < $\epsilon$
 ### Collaborative Filtering <a name="collaborate"></a>
 - Recommend items to you based on ratings of users who gave similar ratings as you
 - Cost function:
-$$Minimize_{(w^{(1)}, ..., w^{(n_u)}), (b^{(1)}, ..., b^{(n_u)}), (x^{(1)}, ..., x^{(n_m)})} = \frac{1}{2} \sum_{(i,j):r(i,j)=1} (w^{(j)}x^{(i)} + b^{(j)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum_{j=1}^{n_u} \sum_{k=1}^n (w_k^{(j)})^2 + \frac{\lambda}{2} \sum_{i=1}^{n_m} \sum_{k=1}^n (x_k^{(i)})^2$$
-Where (i,j) indicates whether user j has rated item i, $n_u$ is the number of users, $n_m$ is the number of items, $n$ is the number of features, 
+$$Minimize_{(w^{(1)}, ..., w^{(n_u)}), (b^{(1)}, ..., b^{(n_u)}), (x^{(1)}, ..., x^{(n_m)})} =$$
+$$\frac{1}{2} \sum_{(i,j):r(i,j)=1} (w^{(j)}x^{(i)} + b^{(j)} - y^{(i,j)})^2 + \frac{\lambda}{2} \sum_{j=1}^{n_u} \sum_{k=1}^n (w_k^{(j)})^2 + \frac{\lambda}{2} \sum_{i=1}^{n_m} \sum_{k=1}^n (x_k^{(i)})^2$$
+Where given user j and item i, $n_u$ is the number of users, $n_m$ is the number of items, $n$ is the number of features, 
 - Limitations:
     - cold start problem: recommend new items with few rates, and recommend items to new users who rated few items.
     - no natural way to use the side information about items or users
@@ -92,7 +97,12 @@ Where (i,j) indicates whether user j has rated item i, $n_u$ is the number of us
 - Recommend items to you based on features of user and item to find good match
 - Cost function:
 $$J = \sum_{(i,j):r(i,j)=1} (v_u^{(j)}v_m^{(i)} - y^{(i,j)})^2$$
-Where $v_u$ is the output vecter of the user neural network and $v_m$ is the output vecter of the item neural network
-## Gradient Descent <a name="gradientdescent"></a>
-This is a sub paragraph, formatted in heading 3 style
+Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecter of the user neural network and $v_m$ is the output vecter of the item neural network
+- If the item dataset is large, two steps could help:
+    - Retrieval: generate large list of plausible item candidates, i.e. a list tries to cover a lot of possible items you could recommend to the users
+    - Ranking: use the retrival item list and feed the user vector and item vector to the neural networks to get the predicted ratings. Then, rank the items to display to the users.
+- $v_m$ can be computed in advanced, so only need to compute $v_u$ when in use.
+
+## Technics to improve machine learning models  <a name="gradientdescent"></a>
+
 
