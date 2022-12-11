@@ -12,7 +12,7 @@ Field of study that gives conputers the ability to learn without explicit progra
     2. [Anomaly Detection](#anomalydetection)
     3. [Collaborative Filtering](#collaborate)
     4. [Content Filtering](#content)
-- [Gradient Descent](#gradientdescent)
+- [Technics for better models](#technics)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -103,6 +103,6 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
     - Ranking: use the retrival item list and feed the user vector and item vector to the neural networks to get the predicted ratings. Then, rank the items to display to the users.
 - $v_m$ can be computed in advanced, so only need to compute $v_u$ when in use.
 
-## Technics to improve machine learning models  <a name="gradientdescent"></a>
+## Technics to improve machine learning models  <a name="technics"></a>
 
 
