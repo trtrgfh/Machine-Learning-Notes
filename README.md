@@ -56,11 +56,11 @@ One downside of using only one decision tree is that small changes in the traini
     - $\sigma(z) = \frac{1}{(1 + e^{-z})}$, tanh(z) = $\frac{(e^z - e^{-z})}{(e^z + e^{-z})}$, relu(z) = $max(0, z)$, leaky relu(z) = $max(0, z) + \alpha * min(0, z)$
     - If use a linear activation function, then no matter how many layers you have, all it's doing is computing a linear activation function.
 - Forward propagation for layer l:
-    - $Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]}$
+    - $Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} (L2 reg: +\frac{\lambda}{2m}||W||_2^2)$
     - $A^{[l]} = g^{[l]}(Z^{[l]})$
 - Backward propagation for layer l:
     - $dZ^{[l]} = dA^{[l]} * g^{[l]'}(Z^{[l]})$
-    - $dW^{[l]} = \frac{1}{m}dZ^{[l]}A^{[l-1]T}$
+    - $dW^{[l]} = \frac{1}{m}dZ^{[l]}A^{[l-1]T} (L2 reg: +\frac{\lambda}{m}W^{[l]})$
     - $db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]},\  axis=1,\  keepdims=True)$
     - $dA^{[l-1]} = W^{[l]T}dZ^{[l]}$
 - Gradient Descent:
@@ -111,5 +111,23 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - The new variables replace the original variables so that less varibles (dimensions) are used.
 
 ## Techniques to Improve Machine Learning Models <a name="technics"></a>
+- High Bias (Underfitting)
+    - Bigger networks
+    - Train longer (e.g. run gradient descent longer)
+    - Find better NN architectures 
+- High Variance (Overfitting)
+    - More data
+    - Regularization (since we want to minimize the cost, if lambda increases, the algorithm would try to descrease the weights to keep the cost low which would end up in a simpler regression or network.)
+    - Find better NN architectures 
+### Dropout Regularization (Inverted Dropout)
+- Randomly "dropping out" (i.e. setting to zero) a certain number of output units in a layer during training. 
+    - d3 = np.random.rand(a3.shape[0], a3.shape[1]) < keep_prob where a3 is the neurons in layer 3 and keep_prob is the probability a neuron is been kept.
+    - a3 *= d3
+    - a3 /= keep_prob (Since no dropout is implemented at test time, we want to keep the expected value of a3 so there's no scaling problem at test time)
+- Intuition: any feature could be zero out, so the weight of the feature would be spread out (shrink)
+- Make keep_prob lower at layers with more neurons to prevent overfitting
+### Data Augumentation
+- echnique used to artificially increase the size of a training dataset by creating modified versions of existing data.
 
 
+    
