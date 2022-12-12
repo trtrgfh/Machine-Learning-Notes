@@ -1,4 +1,4 @@
-# Machine-Learning
+9# Machine-Learning
 Field of study that gives conputers the ability to learn without explicit programed
 
 ## Table of contents
@@ -13,9 +13,10 @@ Field of study that gives conputers the ability to learn without explicit progra
     3. [Collaborative Filtering](#collaborate)
     4. [Content Filtering](#content)
     5. [Principal Component Analysis](#pca)
-
 - [Techniques for Better Models](#technics)
-
+    1. [Dropout Regularization](#dropout)
+    2. [Data Augumentation](#dataaug)
+    
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
 - Types of supervised learning: regression, classification
@@ -110,7 +111,7 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - PCA finds a new set of variables, called principal components, that are linear combinations of the original variables
 - The new variables replace the original variables so that less varibles (dimensions) are used.
 
-## Techniques to Improve Machine Learning Models <a name="technics"></a>
+# Techniques to Improve Machine Learning Models <a name="technics"></a>
 - High Bias (Underfitting)
     - Bigger networks
     - Train longer (e.g. run gradient descent longer)
@@ -119,14 +120,16 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
     - More data
     - Regularization (since we want to minimize the cost, if lambda increases, the algorithm would try to descrease the weights to keep the cost low which would end up in a simpler regression or network.)
     - Find better NN architectures 
-### Dropout Regularization (Inverted Dropout)
+    
+## Dropout Regularization (Inverted Dropout) <a name="dropout"></a>
 - Randomly "dropping out" (i.e. setting to zero) a certain number of output units in a layer during training. 
     - d3 = np.random.rand(a3.shape[0], a3.shape[1]) < keep_prob where a3 is the neurons in layer 3 and keep_prob is the probability a neuron is been kept.
     - a3 *= d3
     - a3 /= keep_prob (Since no dropout is implemented at test time, we want to keep the expected value of a3 so there's no scaling problem at test time)
 - Intuition: any feature could be zero out, so the weight of the feature would be spread out (shrink)
 - Make keep_prob lower at layers with more neurons to prevent overfitting
-### Data Augumentation
+
+## Data Augumentation <a name="dataaug"></a>
 - echnique used to artificially increase the size of a training dataset by creating modified versions of existing data.
 
 
