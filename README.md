@@ -14,7 +14,7 @@ Field of study that gives conputers the ability to learn without explicit progra
     4. [Content Filtering](#content)
     5. [Principal Component Analysis](#pca)
 - [Techniques for Better Models](#technics)
-    1. [Practical Aspect of Deep Learning](#praticalaspect)
+    1. [Initialization of Deep Learning](#initializationdeeplearning)
     2. [Gradient Descent Optimization](#gradientoptimal)
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -111,7 +111,8 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - The new variables replace the original variables so that less varibles (dimensions) are used.
 
 # Techniques to Improve Machine Learning Models <a name="technics"></a>
-## Practical Aspect of Deep Learning <a name="praticalaspect"></a>
+
+## Initialization of Deep Learning <a name="initializationdeeplearning"></a>
 - High Bias (Underfitting)
     - Bigger networks
     - Train longer (e.g. run gradient descent longer)
