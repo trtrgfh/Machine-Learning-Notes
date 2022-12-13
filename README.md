@@ -58,10 +58,10 @@ One downside of using only one decision tree is that small changes in the traini
     - $Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} (L2 reg: +\frac{\lambda}{2m}||W||_2^2)$
     - $A^{[l]} = g^{[l]}(Z^{[l]})$
 - Backward propagation for layer l:
-    - $dZ^{[l]} = dA^{[l]} * g^{[l]'}(Z^{[l]})$
+    - $dZ^{[l]} = A^{[l]} - Y$
     - $dW^{[l]} = \frac{1}{m}dZ^{[l]}A^{[l-1]T} (L2 reg: +\frac{\lambda}{m}W^{[l]})$
     - $db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]},\  axis=1,\  keepdims=True)$
-    - $dA^{[l-1]} = W^{[l]T}dZ^{[l]}$
+    - $dA^{[l-1]} = W^{[l]T}dZ^{[l]} * g^{'[l-1]}(Z^{[l-1]})$
 - Gradient Descent:
     - $W^{[l]} = W^{[l]} - \alpha dW^{[l]}$
     - $b^{[l]} = b^{[l]} - \alpha db^{[l]}$
@@ -110,6 +110,7 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - The new variables replace the original variables so that less varibles (dimensions) are used.
 
 # Techniques to Improve Machine Learning Models <a name="technics"></a>
+## Practical Aspect of Deep Learning <a name="praticalaspect"></a>
 - High Bias (Underfitting)
     - Bigger networks
     - Train longer (e.g. run gradient descent longer)
@@ -119,7 +120,7 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
     - Regularization (since we want to minimize the cost, if lambda increases, the algorithm would try to descrease the weights to keep the cost low which would end up in a simpler regression or network.)
     - Find better NN architectures 
     
-## Dropout Regularization (Inverted Dropout) <a name="dropout"></a>
+### Dropout Regularization (Inverted Dropout) <a name="dropout"></a>
 - Randomly "dropping out" (i.e. setting to zero) a certain number of output units in a layer during training. 
     - d3 = np.random.rand(a3.shape[0], a3.shape[1]) < keep_prob where a3 is the neurons in layer 3 and keep_prob is the probability a neuron is been kept.
     - a3 *= d3
@@ -127,22 +128,22 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - Intuition: any feature could be zero out, so the weight of the feature would be spread out (shrink)
 - Make keep_prob lower at layers with more neurons to prevent overfitting
 
-## Data Augumentation <a name="dataaug"></a>
+### Data Augumentation <a name="dataaug"></a>
 - Technique used to artificially increase the size of a training dataset by creating modified versions of existing data (e.g. image: random rotation, distortion)
 
-## Normalizing Input <a name="normalinput"></a>
+### Normalizing Input <a name="normalinput"></a>
 - Used to ensure that all of the input data is on the same scale, which can make the training process more efficient and improve the performance of the model.
 - Use the same $\mu$ and $\sigma$ to normalize test set
 - Make gradient descent less oscillate.
 
-## Weight Initialization <a name="weightinit"></a>
+### Weight Initialization <a name="weightinit"></a>
 - Proper weight initialization can help speed up training, improve the network's ability to learn, and prevent issues such as vanishing or exploding gradients
 - In deep network (large number of layers), if $W^{[L]} > I$(Identity Matrix) the value of predicted y could be large (explode), $W^{[L]} < I$ the value of predicted y could be too small (vanish)
 - For ReLU activation, use $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]}})$
 - For tanh activation, use $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{1}{n^{[l-1]}})$ (Xaviar initialization)
 - OR $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]} + n^{[l]}})$
 
-## Gradient Checking <a name="gradientcheck"></a>
+### Gradient Checking <a name="gradientcheck"></a>
 - Take $W^{[1]}, b^{[1]}, W^{[l]}, b^{[l]}$ and $dW^{[1]}, db^{[1]}, dW^{[l]}, db^{[l]}$, and reshape them into vectors $\theta$ and $d\theta$
 - for i in range(1, l):
     -  $d\theta_{approx}^{[i]} = \frac{J(\theta_1, \theta_2, ..., \theta_i + \epsilon, ...) - J(\theta_1, \theta_2, ..., \theta_i - \epsilon, ...)}{2\epsilon}$
@@ -153,3 +154,56 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
     - remember regularization
     - don't work with dropout (you can check if grad check works without dropout first, and then turn on dropout if grad check pass)
     - run grad check at random initialization, then again after some iteration
+
+## Gradient Descent Optimization  <a name="gradientoptimal"></a>
+### Mini-Batch Gradient Descent <a name="minigradientdescent"></a>
+- Used for faster training on large dataset. Divide the training examples into smaller subsets and run gradient descents on the subsets.
+e.g. for t in range(1, 5000): (each t is a subset of the training example)
+    - forward propagation on $X^{{t}}$
+    - compute cost for $X^{[t]}, Y^{[t]}$ and divide cost by 1000 (if each subset contains 1000 training examples)
+    - backward propagation using $X^{[t]}, Y^{[t]}$ to compute gradient
+    - update W, b
+- epoch: a single pass through the training set
+    - in this case, 1 epoch allows you to take 5000 gradient descent steps
+- batch size = m -> batch gradient descent (decrease on every iteration, but slow if m is large). if m <= 2000, use batch gradient descent
+- batch size = 1 -> stochastic gradient descent (oscillate a lot, won't reach minimum)
+- common mini-batch size: 64, 128, 256, 512 
+
+### Exponentially Weighted Moving Average <a name="exponentialweightedavg"></a>
+- Used to smooth out data and make it easier to identify trends
+- Formula: $v_t = \beta v_{t-1} + (1 - \beta)\theta_t$, where $v_t$ is average over the last $\approx \frac{1}{1-\beta}$ data
+- Bias correction: since $v_0 = 0$, $v_t$ would be small during initial phase. You can make $v_t = \frac{v_t}{1-\beta^t}$ to solve this problem
+
+### Gradient with Momentum <a name="gradientmomentum"></a>
+- Use exponentially weighted average to average out the last $\approx \frac{1}{1-\beta}$ gradients, so gradient descent is less oscillate
+- On iteration t,
+    - Compute dW, db on the current mini-batch
+    - $v_{dW} = \beta v_{dW} + (1 - \beta)dW$ 
+    - $v_{db} = \beta v_{db} + (1 - \beta)db$ 
+    - W -= $\alpha v_{dW}$, b -= $\alpha v_{db}$ 
+- Hyperparamters: $\alpha,\ \beta$ (common: $\beta = 0.9$)
+- Bias correction is not necessary
+
+### RMSprop <a name="rmsprop"></a>
+- Intuition: Suppose b is the vertical axis, w is the horizontal axis, and gradient descent oscillate a lot vertically.
+- On iteration t,
+    - Compute dW, db on the current mini-batch
+    - $S_{dW} = \beta S_{dW} + (1 - \beta)dW^2$ (element-wise square to make $S_{dW}$ relatively small to speed up the update in the horizontal direction)
+    - $S_{db} = \beta S_{db} + (1 - \beta)db^2$ (element-wise square to make $S_{db}$ relatively large to slow down update in the vertical direction)
+    - W -= $\alpha \frac{dW}{\sqrt{S_{dW}} + \epsilon}$, b -= $\alpha \frac{db}{\sqrt{S_{db}} + \epsilon} (\epsilon$ avoid zero division, e.g. $\epsilon = 10^{-8}$)
+
+### Adam Optimization <a name="adamoptimization"></a>
+- Combine with gradient with momentum and RMSprop
+- $V_{dw} = 0,\ S_{dw} = 0,\ V_{db} = 0,\ S_{db} = 0$
+- On iteration t,
+    - Compute dW, db on the current mini-batch
+    - $V_{dW} = \beta_1 V_{dW} + (1 - \beta_1)dW$, $V_{db} = \beta_1 V_{db} + (1 - \beta_1)db$  
+    - $S_{dW} = \beta_2 S_{dW} + (1 - \beta_2)dW^2$, $S_{db} = \beta_2 S_{db} + (1 - \beta_2)db^2$
+    - $V_{dW}^{corrected} = \frac{V_{dW}}{(1 - \beta_1^t)}$, $V_{db}^{corrected} = \frac{V_{db}}{(1 - \beta_1^t)}$
+    - $S_{dW}^{corrected} = \frac{S_{dW}}{(1 - \beta_2^t)}$, $S_{db}^{corrected} = \frac{S_{db}}{(1 - \beta_2^t)}$
+    - W -= $\alpha \frac{V_{dW}^{corrected}}{\sqrt{S_{dW}^{corrected}} + \epsilon}$, b -= $\alpha \frac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected}} + \epsilon}$
+- Common hyperparamters: $\alpha(need\ tuning),\ \beta_1  = 0.9,\ \beta_2  = 0.999,\ \epsilon  = 10^{-8}$
+
+### Learning Rate Decay <a name="learnratedecay"></a>
+- Slowly reduce learning rate to speed up learning algorithm
+- e.g. $\alpha = \frac{1}{1 + decay-rate * epoch-num}\alpha_0$, or $\alpha = 0.95^{epoch-num}\alpha_0$, or $\alpha = \frac{k}{\sqrt{epoch-num}}\alpha_0$, or $\alpha = \frac{k}{\sqrt{t}}\alpha_0$
