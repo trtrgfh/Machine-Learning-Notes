@@ -143,10 +143,13 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - OR $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]} + n^{[l]}})$
 
 ## Gradient Checking <a name="gradientcheck"></a>
-
-- Take $W^{[1]}, b^{[1]}, W^{[l]}, b^{[l]}$ and reshape into a vector $\theta$
-- Take $dW^{[1]}, db^{[1]}, dW^{[l]}, db^{[l]}$ and reshape into a vector $d\theta$
+- Take $W^{[1]}, b^{[1]}, W^{[l]}, b^{[l]}$ and $dW^{[1]}, db^{[1]}, dW^{[l]}, db^{[l]}$, and reshape them into vectors $\theta$ and $d\theta$
 - for i in range(1, l):
     -  $d\theta_{approx}^{[i]} = \frac{J(\theta_1, \theta_2, ..., \theta_i + \epsilon, ...) - J(\theta_1, \theta_2, ..., \theta_i - \epsilon, ...)}{2\epsilon}$
-- Check if  $d\theta_{approx} \approx d\theta:$
-$$\frac{\lVert d\theta_{approx} - d\theta \rVert_2}{\lVert d\theta_{approx}\rVert_2 + \lVert d\theta\rVert_2} \approx 10^{-7}$$
+- Check if $d\theta_{approx} \approx d\theta$ by checking $\frac{\lVert d\theta_{approx} - d\theta \rVert_2}{\lVert d\theta_{approx}\rVert_2 + \lVert d\theta\rVert_2}$ $\approx$ 10^{-7}-Great, $\approx$ 10^{-5}-Alright, $\approx$ 10^{-3}-Worry
+- Note: 
+    - don't use in training, only to debug
+    - if grad check fails, look at components to identity bug (e.g. value of grad check in some layers of $W^{[l]}$ or $b^{[l]}$ are very different)
+    - remember regularization
+    - don't work with dropout (you can check if grad check works without dropout first, and then turn on dropout if grad check pass)
+    - run grad check at random initialization, then again after some iteration
