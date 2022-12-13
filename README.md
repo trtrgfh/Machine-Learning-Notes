@@ -54,7 +54,7 @@ One downside of using only one decision tree is that small changes in the traini
 - Neural networks are designed to mimic the way the human brain processes information.
 - It is composed of multiple interconnected nodes, or "neurons," which process and transmit information. 
 - Activation functions determine the output of a neuron given an input or set of inputs, some common activation functions are
-    - $\sigma(z) = \frac{1}{(1 + e^{-z})}$, tanh(z) = $\frac{(e^z - e^{-z})}{(e^z + e^{-z})}$, relu(z) = $max(0, z)$, leaky relu(z) = $max(0, z) + \alpha * min(0, z)$
+    - $\sigma(z) = \frac{1}{(1 + e^{-z})}$, tanh(z) = $\frac{(e^z - e^{-z})}{(e^z + e^{-z})}$, ReLU(z) = $max(0, z)$, leaky ReLU(z) = $max(0, z) + \alpha * min(0, z)$
     - If use a linear activation function, then no matter how many layers you have, all it's doing is computing a linear activation function.
 - Forward propagation for layer l:
     - $Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} (L2 reg: +\frac{\lambda}{2m}||W||_2^2)$
@@ -130,7 +130,17 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - Make keep_prob lower at layers with more neurons to prevent overfitting
 
 ## Data Augumentation <a name="dataaug"></a>
-- echnique used to artificially increase the size of a training dataset by creating modified versions of existing data.
+- Technique used to artificially increase the size of a training dataset by creating modified versions of existing data (e.g. image: random rotation, distortion)
 
+## Normalizing Input <a name="normalinput"></a>
+- 
+- Use the same $\mu$ and $\sigma$ to normalize test set
+- Helps gradient descent
 
-    
+## Vanishing/Exploding Gradients <a name="vanishgradient"></a>
+- in deep network, if $W^{[L]} > I$ the value of predicted y will be too large (explode), $W^{[L]} < I$ the value of predicted y will be too small (vanish)
+
+## Weight Initializing
+- For ReLU activation: $np.sqrt(\frac{2}{n^{[l-1]}})$
+- For tanh activation: $np.sqrt(\frac{1}{n^{[l-1]}})$, Xaviar initialization
+- $np.sqrt(\frac{2}{n^{[l-1]} + n^{[l]}})$
