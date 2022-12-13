@@ -206,4 +206,4 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
 
 ### Learning Rate Decay <a name="learnratedecay"></a>
 - Slowly reduce learning rate to speed up learning algorithm
-- e.g. $\alpha = \frac{1}{1 + \decayrate * epochnum}\alpha_0$, or $\alpha = 0.95^{epochnum}\alpha_0$, or $\alpha = \frac{k}{\sqrt{epochnum}}\alpha_0$, or $\alpha = \frac{k}{\sqrt{t}}\alpha_0$
+- e.g. $\alpha = \frac{1}{1 + decayrate * epochnum}\alpha_0$, or $\alpha = 0.95^{epochnum}\alpha_0$, or $\alpha = \frac{k}{\sqrt{epochnum}}\alpha_0$, or $\alpha = \frac{k}{\sqrt{t}}\alpha_0$
