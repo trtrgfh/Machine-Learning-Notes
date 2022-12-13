@@ -148,5 +148,5 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - Take $dW^{[1]}, db^{[1]}, dW^{[l]}, db^{[l]}$ and reshape into a vector $d\theta$
 - for i in range(1, l):
     -  $d\theta_{approx}^{[i]} = \frac{J(\theta_1, \theta_2, ..., \theta_i + \epsilon, ...) - J(\theta_1, \theta_2, ..., \theta_i - \epsilon, ...)}{2\epsilon}$
-- Check if  $d\theta_{approx} = d\theta:$
-$$\frac{||d\theta_{approx} - d\theta||_2}$$
+- Check if  $d\theta_{approx} \approx d\theta:$
+$$\frac{\lVert d\theta_{approx} - d\theta \rVert_2}{\lVert d\theta_{approx}\rVert_2 + \lVert d\theta\rVert_2} \approx 10^{-7}$$
