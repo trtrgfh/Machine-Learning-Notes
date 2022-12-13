@@ -14,7 +14,8 @@ Field of study that gives conputers the ability to learn without explicit progra
     4. [Content Filtering](#content)
     5. [Principal Component Analysis](#pca)
 - [Techniques for Better Models](#technics)
-    
+    1. [Practical Aspect of Deep Learning](#praticalaspect)
+    2. [Gradient Descent Optimization](#gradientoptimal)
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
 - Types of supervised learning: regression, classification
@@ -193,7 +194,7 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
     - W -= $\alpha \frac{dW}{\sqrt{S_{dW}} + \epsilon}$, b -= $\alpha \frac{db}{\sqrt{S_{db}} + \epsilon} (\epsilon$ avoid zero division, e.g. $\epsilon = 10^{-8}$)
 
 ### Adam Optimization <a name="adamoptimization"></a>
-- Combine with gradient with momentum and RMSprop
+- Combine gradient with momentum and RMSprop
 - $V_{dw} = 0,\ S_{dw} = 0,\ V_{db} = 0,\ S_{db} = 0$
 - On iteration t,
     - Compute dW, db on the current mini-batch
