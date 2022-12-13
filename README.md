@@ -14,8 +14,6 @@ Field of study that gives conputers the ability to learn without explicit progra
     4. [Content Filtering](#content)
     5. [Principal Component Analysis](#pca)
 - [Techniques for Better Models](#technics)
-    1. [Dropout Regularization](#dropout)
-    2. [Data Augumentation](#dataaug)
     
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -133,14 +131,22 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - Technique used to artificially increase the size of a training dataset by creating modified versions of existing data (e.g. image: random rotation, distortion)
 
 ## Normalizing Input <a name="normalinput"></a>
-- 
+- Used to ensure that all of the input data is on the same scale, which can make the training process more efficient and improve the performance of the model.
 - Use the same $\mu$ and $\sigma$ to normalize test set
-- Helps gradient descent
+- Make gradient descent less oscillate.
 
-## Vanishing/Exploding Gradients <a name="vanishgradient"></a>
-- in deep network, if $W^{[L]} > I$ the value of predicted y will be too large (explode), $W^{[L]} < I$ the value of predicted y will be too small (vanish)
+## Weight Initialization <a name="weightinit"></a>
+- Proper weight initialization can help speed up training, improve the network's ability to learn, and prevent issues such as vanishing or exploding gradients
+- In deep network (large number of layers), if $W^{[L]} > I$(Identity Matrix) the value of predicted y could be large (explode), $W^{[L]} < I$ the value of predicted y could be too small (vanish)
+- For ReLU activation, use $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]}})$
+- For tanh activation, use $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{1}{n^{[l-1]}})$ (Xaviar initialization)
+- OR $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]} + n^{[l]}})$
 
-## Weight Initializing
-- For ReLU activation: $np.sqrt(\frac{2}{n^{[l-1]}})$
-- For tanh activation: $np.sqrt(\frac{1}{n^{[l-1]}})$, Xaviar initialization
-- $np.sqrt(\frac{2}{n^{[l-1]} + n^{[l]}})$
+## Gradient Checking <a name="gradientcheck"></a>
+
+- Take $W^{[1]}, b^{[1]}, W^{[l]}, b^{[l]}$ and reshape into a vector $\theta$
+- Take $dW^{[1]}, db^{[1]}, dW^{[l]}, db^{[l]}$ and reshape into a vector $d\theta$
+- for i in range(1, l):
+    -  $d\theta_{approx}^{[i]} = \frac{J(\theta_1, \theta_2, ..., \theta_i + \epsilon, ...) - J(\theta_1, \theta_2, ..., \theta_i - \epsilon, ...)}{2\epsilon}$
+- Check if  $d\theta_{approx} = d\theta:$
+$$\frac{||d\theta_{approx} - d\theta||_2}$$
