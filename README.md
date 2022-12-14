@@ -16,6 +16,8 @@ Field of study that gives conputers the ability to learn without explicit progra
 - [Techniques for Better Models](#technics)
     1. [Initialization of Deep Learning](#initializationdeeplearning)
     2. [Gradient Descent Optimization](#gradientoptimal)
+    3. [Hyperparameters Tuning, Batch Norm, Softmax](tuning_batchnorm_softmax)
+    
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
 - Types of supervised learning: regression, classification
@@ -210,7 +212,9 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
 - Slowly reduce learning rate to speed up learning algorithm
 - e.g. $\alpha = \frac{1}{1 + decayrate * epochnum}\alpha_0$, or $\alpha = 0.95^{epochnum}\alpha_0$, or $\alpha = \frac{k}{\sqrt{epochnum}}\alpha_0$, or $\alpha = \frac{k}{\sqrt{t}}\alpha_0$
 
-## Hyperparameter Tuning <a name="hyperparametertuning"></a>
+## Hyperparameters Tuning, Batch Norm, Softmax <a name="tuning_batchnorm_softmax"></a>
+
+### Hyperparameter Tuning <a name="hyperparametertuning"></a>
 - Use random search: select random values for the hyperparameters.
 - Don't use grid search: some hyperparameters might not be as important so there's no point to try many values on them (e.g. tuning $\epsilon$).
 - Coarse to fine: Starting with a broad range of values for the hyperparameters and then gradually narrowing down the range to identify the best values for the model. 
@@ -218,7 +222,7 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
     - logrithmetic scale for $\alpha$, $\alpha \in [0.0001, 0.1]$, a = $log_{10}0.0001 = -4$, r = -4 * np.random.rand(), $\alpha = 10^r$ 
     - $\beta \in [0.9, 0.999]$, $1 - \beta \in [0.1, 0.001]$, r = -3 * np.random.rand(), $1 - \beta = 10^r$, $\beta = 1 - 10^r$ 
 
-## Batch Normalization <a name="hyperparametertuning"></a>
+### Batch Normalization <a name="hyperparametertuning"></a>
 - Used on the input layer and the hidden layers to improve the performance and stability of neural networks
     - Prevent covariate shift (input distribution changes): for activations in a hidden layers, the values of W and b in the previous layers keep on changing, so the activations suffer from covariate shift. Batch normalization ensures the mean and variance of z for the activations remains the same.
     - Slight regularization effect: since mean and variance is computed on each mini-batch instead of the entire dataset, it would add noise to the values of z in each mini-batch. 
