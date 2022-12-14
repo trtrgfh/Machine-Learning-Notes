@@ -220,6 +220,8 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
 
 ## Batch Normalization <a name="hyperparametertuning"></a>
 - Used on the input layer and the hidden layers to improve the performance and stability of neural networks
+    - Prevent covariate shift (input distribution changes): for activations in a hidden layers, the values of W and b in the previous layers keep on changing, so the activations suffer from covariate shift. Batch normalization ensures the mean and variance of z for the activations remains the same.
+    - Slight regularization effect: since mean and variance is computed on each mini-batch instead of the entire dataset, it would add noise to the values of z in each mini-batch. 
 - Given values in layer l, $z^{[l]\(1)}, ..., z^{[l]\(m)}$
     - $\mu = \frac{1}{m} \sum_{i} z^{[l]\(i)}$ 
     - $\sigma^2 = \frac{1}{m} \sum_{i} (z^{[l]\(i)} - \mu)^2$ 
@@ -228,3 +230,4 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
     - pass $\widetilde z^{[l]\(i)}$ to the activation function instead of $z^{[l]}$
 - You can eliminate $b^{[l]}$ when calculating $z^{[l]}$, since $b^{[l]}$ will be canceled out by the mean subtraction step.
 - Updates of $\gamma\ and\ \beta$ also works with gradient with momentum, RMSprop, Adam.
+- At test time, use exponential weighted average across the mini-batches to calculate the mean and variance. and then calculate $z_{norm}$ and $\widetilde z$ for the test set.
