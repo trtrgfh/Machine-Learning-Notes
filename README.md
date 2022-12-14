@@ -16,7 +16,7 @@ Field of study that gives conputers the ability to learn without explicit progra
 - [Techniques for Better Models](#technics)
     1. [Initialization of Deep Learning](#initializationdeeplearning)
     2. [Gradient Descent Optimization](#gradientoptimal)
-    3. [Hyperparameters Tuning, Batch Norm, Softmax](tuning_batchnorm_softmax)
+    3. [Hyperparameters Tuning, Batch Norm, Softmax](#tuning_batchnorm_softmax)
     
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
