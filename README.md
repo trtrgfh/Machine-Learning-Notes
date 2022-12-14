@@ -209,3 +209,22 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
 ### Learning Rate Decay <a name="learnratedecay"></a>
 - Slowly reduce learning rate to speed up learning algorithm
 - e.g. $\alpha = \frac{1}{1 + decayrate * epochnum}\alpha_0$, or $\alpha = 0.95^{epochnum}\alpha_0$, or $\alpha = \frac{k}{\sqrt{epochnum}}\alpha_0$, or $\alpha = \frac{k}{\sqrt{t}}\alpha_0$
+
+## Hyperparameter Tuning <a name="hyperparametertuning"></a>
+- Use random search: select random values for the hyperparameters.
+- Don't use grid search: some hyperparameters might not be as important so there's no point to try many values on them (e.g. tuning $\epsilon$).
+- Coarse to fine: Starting with a broad range of values for the hyperparameters and then gradually narrowing down the range to identify the best values for the model. 
+- Appropriate scale for hyperparameters, for example:
+    - logrithmetic scale for $\alpha$, $\alpha \in [0.0001, 0.1]$, a = $log_{10}0.0001 = -4$, r = -4 * np.random.rand(), $\alpha = 10^r$ 
+    - $\beta \in [0.9, 0.999]$, $1 - \beta \in [0.1, 0.001]$, r = -3 * np.random.rand(), $1 - \beta = 10^r$, $\beta = 1 - 10^r$ 
+
+## Batch Normalization <a name="hyperparametertuning"></a>
+- Used on the input layer and the hidden layers to improve the performance and stability of neural networks
+- Given values in layer l, $z^{[l]\(1)}, ..., z^{[l]\(m)}$
+    - $\mu = \frac{1}{m} \sum_{i} z^{[l]\(i)}$ 
+    - $\sigma^2 = \frac{1}{m} \sum_{i} (z^{[l]\(i)} - \mu)^2$ 
+    - $z_{norm}^{[l]\(i)} = \frac{z^{[l]\(i)} - \mu}{\sqrt{\sigma^2 + \epsilon}}$
+    - $\widetilde z^{[l]\(i)} = \gamma z_{norm}^{[l]\(i)} + \beta$ (you can also use gradient descent to update $\gamma\ and\ \beta$, different from the $\beta$ in gradient with momentum)
+    - pass $\widetilde z^{[l]\(i)}$ to the activation function instead of $z^{[l]}$
+- You can eliminate $b^{[l]}$ when calculating $z^{[l]}$, since $b^{[l]}$ will be canceled out by the mean subtraction step.
+- Updates of $\gamma\ and\ \beta$ also works with gradient with momentum, RMSprop, Adam.
