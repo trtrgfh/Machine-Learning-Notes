@@ -235,3 +235,13 @@ e.g. for t in range(1, 5000): (each t is a subset of the training example)
 - You can eliminate $b^{[l]}$ when calculating $z^{[l]}$, since $b^{[l]}$ will be canceled out by the mean subtraction step.
 - Updates of $\gamma\ and\ \beta$ also works with gradient with momentum, RMSprop, Adam.
 - At test time, use exponential weighted average across the mini-batches to calculate the mean and variance. and then calculate $z_{norm}$ and $\widetilde z$ for the test set.
+
+### Softmax Regression <a name="softmax"></a>
+- Used for multi-class classification
+- Softmax function:
+$$a_j = \frac{e^{z_j}}{\sum_{k=1}^K e^{z_k}} = P(y = j|\vec x)$$ where j is a specific number in K and K is the number of classes
+- Cost function:
+$$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ where m is the number of examples, K is the number of classes
+- We want to maximize the likelihood that $y_j$ is one and $\hat y_j$ is close to one for all the training examples, i.e. maximize the likelihood that the target value and the predicted value are the same. 
+- Then since gradient descent trys to minimize the cost, we add a negative sign at the front of the function. 
+- For more numerical accuracy, use linear activation instead of softmax activation in the neural network, and add from_logits=True in the loss functoin when compile the model.
