@@ -17,7 +17,8 @@ Field of study that gives conputers the ability to learn without explicit progra
     1. [Initialization of Deep Learning](#initializationdeeplearning)
     2. [Gradient Descent Optimization](#gradientoptimal)
     3. [Hyperparameters Tuning, Batch Norm, Softmax](#tuning_batchnorm_softmax)
-    
+- [Strategy for Machinel Learning Projects](#strategmlyproject)
+
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
 - Types of supervised learning: regression, classification
@@ -245,3 +246,5 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - We want to maximize the likelihood that $y_j$ is one and $\hat y_j$ is close to one for all the training examples, i.e. maximize the likelihood that the target value and the predicted value are the same. 
 - Then since gradient descent trys to minimize the cost, we add a negative sign at the front of the function. 
 - For more numerical accuracy, use linear activation instead of softmax activation in the neural network, and add from_logits=True in the loss functoin when compile the model.
+
+## Strategy for Machinel Learning Projects <a name="strategmlyproject"></a>
