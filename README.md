@@ -309,3 +309,11 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Need large amounts of data and the potential for overfitting.
 
 ## Convolutional Neural Network <a name="cnn"></a>
+- edge detection, 
+- you can treat the values in a filter as parameters that deep nn can learn, and it could be more rebust
+- Padding: 
+    - shrinking output
+    - throwing away info from the edge
+- n+2p-f+1
+- valid convolution: no padding, nxn, fxf, n-f+1xn-f+1
+- same convolutoin: pad so that the ouput size is the same as input size
