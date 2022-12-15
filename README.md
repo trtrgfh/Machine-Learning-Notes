@@ -271,6 +271,18 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Bairance problem, when huamn level error is close to the training error, but varies from the dev error
 - Use human level error as a proxy for the bayes error(owest possible prediction error that can be achieved)
     - in many tasks, human error is close to the bayes error
-- Some tasks machine learning can pass human performance easily, e.g. product recommendations, structure data, not natural perception, lots of data
+- Some tasks machine learning can pass human performance easily, e.g. product recommendations
+    - structure data, not natural perception, lots of data
 
 ### Error Analysis <a name="erroranalysis"></a>
+- Manually examine the mistakes that the algorithm is making to gain insights into what to do next.
+- e.g. randomly choose 100 misclassified examples from the dev set, and examine which kind of examples has caused the most error
+- It's ok to have some random incorrectly labeled examples in DL algorithms  
+- build your first system quickly, then iterate
+
+### Missmatched Training and Dev/Test set <a name="erroranalysis"></a>
+- If training dataset is from different distribution 
+- if there is small amount data from the distribution you care about 
+- training-dev set
+### Learning From Multiple Tasks <a name="erroranalysis"></a>
+
