@@ -2,22 +2,23 @@
 Field of study that gives conputers the ability to learn without explicit programed
 
 ## Table of contents
-- [Supervised Learning](#supervisedlearning)
+1. [Supervised Learning](#supervisedlearning)
     1. [Linear Regression](#linearregression)
     2. [Logistic Regression](#logisticregression)
     3. [Decision Trees](#decisiontrees)
     4. [Neural Networks](#neuralnetworks)
-- [Unsupervised Learning](#unsupervisedlearning)
+2. [Unsupervised Learning](#unsupervisedlearning)
     1. [K Means Algorithm](#kmeans)
     2. [Anomaly Detection](#anomalydetection)
     3. [Collaborative Filtering](#collaborate)
     4. [Content Filtering](#content)
     5. [Principal Component Analysis](#pca)
-- [Techniques for Better Models](#technics)
+3. [Techniques for Better Models](#technics)
     1. [Initialization of Deep Learning](#initializationdeeplearning)
     2. [Gradient Descent Optimization](#gradientoptimal)
     3. [Hyperparameters Tuning, Batch Norm, Softmax](#tuning_batchnorm_softmax)
-- [Strategy for Machinel Learning Projects](#strategmlyproject)
+4. [Strategy for Machinel Learning Projects](#strategmlyproject)
+5. [Convolutional Neural Network](#cnn)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -306,3 +307,5 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Can be more effective than traditional machine learning methods that rely on hand-crafted features because it allows the model to learn the most relevant and useful features directly from the data.
 - Can lead to improved performance and faster, more efficient training.
 - Need large amounts of data and the potential for overfitting.
+
+## Convolutional Neural Network <a name="cnn"></a>
