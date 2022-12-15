@@ -277,12 +277,32 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 ### Error Analysis <a name="erroranalysis"></a>
 - Manually examine the mistakes that the algorithm is making to gain insights into what to do next.
 - e.g. randomly choose 100 misclassified examples from the dev set, and examine which kind of examples has caused the most error
-- It's ok to have some random incorrectly labeled examples in DL algorithms  
+- DL algorithms are quite robust to random errors (incorrectly labeled examples) in the training set, but not systematics error (consistently mislabel  examples with a certain feature)
 - build your first system quickly, then iterate
 
-### Missmatched Training and Dev/Test set <a name="erroranalysis"></a>
-- If training dataset is from different distribution 
-- if there is small amount data from the distribution you care about 
-- training-dev set
-### Learning From Multiple Tasks <a name="erroranalysis"></a>
+### Missmatched Training and Dev/Test Set <a name="mismatchedtrain"></a>
+- If only a small amount of data is from the distribution A which you care about and a large amount of data is from another distributions B, then you should put all data from distribution B into training and split the data from distribution A into all training, dev, and test set.
+    -  if 200000 exmaples from distribution B, 10000 exmaples from distribution A
+    -  training set: all 200000 examples from B, and 5000 exmaples from A
+    -  dev set: 2500 exmaples from A, test set: 2500 exmaples from A
+- If the training error is much higher than the dev error, then it could be either a high variance problem or the training set is from different distribution to the dev set.
+    - add a new training-dev set (same distribution as the training set, but not used for training)
+    - If training-dev error is much higher than the training error, then variance problem
+    - If training-dev error is close to the training error, but much lower than the dev error, then data mismatch(different distribution) problem
+- Another way to address the data mismatch problem is to use the artificial data synthesis, e.g. creat more data similar to the dev set by addding car noise to the original audio. 
 
+### Learning From Multiple Tasks <a name="multitask"></a>
+- Transfer learning: A model trained on one task is used to perform a different but related task. It's useful when:
+    - both tasks have the same input (e.g.both has image input)
+    - not enough data available to train a model from scratch on the second task. 
+    - low level feature learned from the first task is helpful to the second task 
+- Multi-task learning: - Used when you want to predict mulitple objects at the same time (unlike softmax, one image can have multiple label)
+    - tasks which have shared lower-level feature
+    - amound of data for each task is usually quite similar
+    - as long as the neural network is big enough, it should perform similar or better than creating multiple neural networks for each task
+
+### End to End Deep Learning <a name="endtoend"></a>
+- Using deep neural networks to learn directly from raw inputs to outputs, without the need for manual feature engineering. 
+- Can be more effective than traditional machine learning methods that rely on hand-crafted features because it allows the model to learn the most relevant and useful features directly from the data.
+- Can lead to improved performance and faster, more efficient training.
+- Need large amounts of data and the potential for overfitting.
