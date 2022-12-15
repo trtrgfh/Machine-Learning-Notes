@@ -119,10 +119,13 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - High Bias (Underfitting)
     - Bigger networks
     - Train longer (e.g. run gradient descent longer)
-    - Find better NN architectures 
+    - Use better optimization algorithms (e.g. Adam, RMSprop)
+    - Find better NN architectures/hyperparameters search (e.g. RNN, CNN)
 - High Variance (Overfitting)
     - More data
-    - Regularization (since we want to minimize the cost, if lambda increases, the algorithm would try to descrease the weights to keep the cost low which would end up in a simpler regression or network.)
+    - Regularization 
+        - L2 Regularization (if lambda increases, the algorithm would try to descrease the weights to keep the cost low (minimize cost) which would end up in a simpler regression or network.)
+        - Dropout/Data augumentation
     - Find better NN architectures 
     
 ### Dropout Regularization (Inverted Dropout) <a name="dropout"></a>
@@ -248,3 +251,26 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - For more numerical accuracy, use linear activation instead of softmax activation in the neural network, and add from_logits=True in the loss functoin when compile the model.
 
 ## Strategy for Machinel Learning Projects <a name="strategmlyproject"></a>
+- Orthogonalization: making the different components of the model more independent from each other.
+
+### Set Up Your Gaol <a name="strategmlyproject"></a>
+- Use a single real number evaluate metric so you can quickly evaluate the performance of your model on the train/dev/test sets.
+- For n metrics, it's reasonable to have 1 optimizing metric (e.g. maximize accuracy) and n-1 satisficing metric (e.g. thresholds such as runtime less than 100ms). 
+- Make sure dev set and test set come from same distribution, and can be reflected to the data you expect to get in the future.
+- If the dataset is large (e.g. 1 million examples), you can split the dataset to 98%/1%/1% as long as the test set is big enough to give high confidence in the overall performance of your system 
+- You can add extra weights to the evaluate metric if some examples matters more (e.g. less violence image, add a weight indicates whether a picture contains violence)
+
+### Human Level Performance <a name="humanlevel"></a>
+- Huamn level performance is the ability of a model to perform a task at the same level of accuracy as a human.
+- When a model's performance is less than human, there are a few tactics to improve the model 
+    - get labeled data from human
+    - gain insight from error analysis
+    - analysis of bias/variance
+- But after model performance surpass huamn, the model's progress usually slow down and becomes harder to apply the tactics. 
+- Bias problem, when human level error is less than the training and dev error
+- Bairance problem, when huamn level error is close to the training error, but varies from the dev error
+- Use human level error as a proxy for the bayes error(owest possible prediction error that can be achieved)
+    - in many tasks, human error is close to the bayes error
+- Some tasks machine learning can pass human performance easily, e.g. product recommendations, structure data, not natural perception, lots of data
+
+### Error Analysis <a name="erroranalysis"></a>
