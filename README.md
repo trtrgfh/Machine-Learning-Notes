@@ -19,6 +19,8 @@ Field of study that gives conputers the ability to learn without explicit progra
     3. [Hyperparameters Tuning, Batch Norm, Softmax](#tuning_batchnorm_softmax)
 4. [Strategy for Machinel Learning Projects](#strategmlyproject)
 5. [Convolutional Neural Network](#cnn)
+    1. [Deep Convolutional Models](#deepcnnmodel)
+
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -343,8 +345,14 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - average pooling: reduces the dimensions of the input by taking the average value of a group of adjacent pixels in the input image.
     - hyperparameters: filter size f, stride s, no parameters for gradient descent to learn
 - Going into deeper layers of CNN, usually $n_h, n_w$ would decrease, and $n_c$ would increase
-- Common pattern: one or more conv -> pool -> one or more conv -> pool -> fc -> fc -> fc -> softmax
+- Common pattern: one or more CONV -> POOL -> one or more CONV -> POOL -> FC -> FC -> FC -> softmax
 
 ### Deep Convolutional Models <a name="deepcnnmodel"></a>
-
+- LeNet-5: used to recognize hand-written digits
+    - $\text{Image} -> \text{CONV}(n_c=6,f=5,s=1) -> \text{AVG-POOL}(f=2, s=2) -> \text{CONV}(n_c=16, f=6, s=1) -> \text{AVG-POOL}(f=2, s=2) -> \text{FC} -> \text{FC} -> \hat y$
+- AlexNet
+    - $image(227,227,3) -> CONV(n_c=96,f=11,s=4) -> MaxPool(f=2, s=2) -> CONV(n_c=16, f=6, s=1) -> avg pool(f=2, s=2) -> FC -> FC -> \hat y$
+ 
+VGG
+ResNet
 ### Pratical Advices for Using ConvNet <a name="advicescnn"></a>
