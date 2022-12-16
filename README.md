@@ -309,11 +309,36 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Need large amounts of data and the potential for overfitting.
 
 ## Convolutional Neural Network <a name="cnn"></a>
-- edge detection, 
-- you can treat the values in a filter as parameters that deep nn can learn, and it could be more rebust
+- parameter sharing: A feature detector that's useful in one part of the image is probably useful in another part of the image
+- sparsity of connection
+- Particularly well-suited for image and video processing tasks
+- You can treat the values in a filter as parameters that deep nn can learn, and it could be more rebust
 - Padding: 
-    - shrinking output
-    - throwing away info from the edge
-- n+2p-f+1
-- valid convolution: no padding, nxn, fxf, n-f+1xn-f+1
-- same convolutoin: pad so that the ouput size is the same as input size
+    - used in convolutional neural networks to add extra pixels to the edges of an image
+    - solve the problem of shrinking output and throwing away info at the edges
+    - valid convolution: no padding, input shape $(n_h, n_w)$, filter shape (f, f), output shape $(n_h - f + 1, n_w - f + 1)$
+    - same convolutoin: pad so that the ouput size is the same as the input size.  output shape (n_h + 2p - f + 1, n_w + 2p - f + 1), p = $\frac{f - 1}{2}$, filter size is usually a odd number
+- Stride:
+    - number of pixels that the convolutional kernel (filter) moves when it slides across the input image.
+    - input shape $(n_h, n_w)$, filter shape (f, f), output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1)$
+- Convolutions over volumn:
+    - input shape $(n_h, n_w, n_c)$, filter shape $(f, f, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c^{'})$, where $n_c$ is the number of channel/depth and $n_c^{'}$ is the number of filters
+- If layer l is a convolution layer:
+    - linear regression: wx+b, CNN: X * filter + b  
+    - input shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l-1]})$
+    - filter shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]})$
+    - output shape $(n_h^{[l]} = \lfloor \frac{n_h^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1 ,n_w^{[l]} = \lfloor \frac{n_w^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1, n_c^{[l]})$
+    - activations shape $(m, n_h^{[l]}, n_w^{[l]}, n_c^{[l]})$
+    - weights shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]}, n_c^{[l]})$
+    - bias shape $(1, 1, 1, n_c^{[l]})$
+- Pooling Layer
+    - max pooling: reduces the dimensions of the input by taking the maximum value of a group of adjacent pixels in the input image.
+    - intuition: if a feature is detected anywhere in the filter then keep a high number, if not, max number would still be quite small
+    - reduces the dimensions of the input, which makes the model more computationally efficient and reduces the number of parameters that the model needs to learn.
+    - model is less sensitive to small shifts in the position of features in the input.
+    - prevent overfitting, since it reduces the number of parameters that the model needs to learn.
+    - input shape $(n_h, n_w, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c)$, p = 0 in most cases
+    - average pooling: reduces the dimensions of the input by taking the average value of a group of adjacent pixels in the input image.
+    - hyperparameters: filter size f, stride s, no parameters for gradient descent to learn
+- h,w decrease, c increase
+- common pattern: one or more conv -> pool -> one or more conv -> pool -> fc -> fc -> fc -> softmax
