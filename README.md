@@ -344,3 +344,7 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - hyperparameters: filter size f, stride s, no parameters for gradient descent to learn
 - Going into deeper layers of CNN, usually $n_h, n_w$ would decrease, and $n_c$ would increase
 - Common pattern: one or more conv -> pool -> one or more conv -> pool -> fc -> fc -> fc -> softmax
+
+### Deep Convolutional Models <a name="deepcnnmodel"></a>
+
+### Pratical Advices for Using ConvNet <a name="advicescnn"></a>
