@@ -309,8 +309,12 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Need large amounts of data and the potential for overfitting.
 
 ## Convolutional Neural Network <a name="cnn"></a>
-- parameter sharing: A feature detector that's useful in one part of the image is probably useful in another part of the image
-- sparsity of connection
+- Parameter sharing: a feature detector that's useful in one part of the image is probably useful in another part of the image
+- Sparsity of connection: in each layer, each output value depends only on a small number of input
+- so a lot fewer parameters, less prone to overfitting
+- good at capturing translation invariance, an image shifted a few pixels should result in pretty similar features and should probably be assigned the same output label. 
+- the fact that you are applying to same filter, knows all the positions of the image, both in the early layers and in the late layers that helps a neural network automatically learn to be more robust or to better capture the desirable property of translation invariance. 
+- so work well in computer vision
 - Particularly well-suited for image and video processing tasks
 - You can treat the values in a filter as parameters that deep nn can learn, and it could be more rebust
 - Padding: 
