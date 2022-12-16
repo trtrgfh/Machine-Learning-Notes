@@ -342,5 +342,5 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - input shape $(n_h, n_w, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c)$, p = 0 in most cases
     - average pooling: reduces the dimensions of the input by taking the average value of a group of adjacent pixels in the input image.
     - hyperparameters: filter size f, stride s, no parameters for gradient descent to learn
-- Going to deeper layers of CNN, usually $n_h, n_w$ would decrease, and $n_c$ would increase
-- common pattern: one or more conv -> pool -> one or more conv -> pool -> fc -> fc -> fc -> softmax
+- Going into deeper layers of CNN, usually $n_h, n_w$ would decrease, and $n_c$ would increase
+- Common pattern: one or more conv -> pool -> one or more conv -> pool -> fc -> fc -> fc -> softmax
