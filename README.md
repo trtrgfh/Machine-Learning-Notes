@@ -309,14 +309,15 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Need large amounts of data and the potential for overfitting.
 
 ## Convolutional Neural Network <a name="cnn"></a>
-- Parameter sharing: a feature detector that's useful in one part of the image is probably useful in another part of the image
-- Sparsity of connection: in each layer, each output value depends only on a small number of input
-- so a lot fewer parameters, less prone to overfitting
-- good at capturing translation invariance, an image shifted a few pixels should result in pretty similar features and should probably be assigned the same output label. 
-- the fact that you are applying to same filter, knows all the positions of the image, both in the early layers and in the late layers that helps a neural network automatically learn to be more robust or to better capture the desirable property of translation invariance. 
-- so work well in computer vision
-- Particularly well-suited for image and video processing tasks
-- You can treat the values in a filter as parameters that deep nn can learn, and it could be more rebust
+- CNN is particularly well-suited for image and video processing tasks
+    - a convolutional layer would have a lot fewer parameters because
+        - Parameter sharing: a feature detector that's useful in one part of the image is probably useful in another part of the image
+        - Sparsity of connection: in each layer, each output value depends only on a small number of input
+     - make the model more computationally efficient, and less prone to overfitting since it reduces the number of parameters that the model needs to learn
+    - good at capturing translation invariance: an image shifted a few pixels should result in pretty similar features and should probably be assigned the same output label. 
+        - convolutional layers with shift invariant filters that are able to recognize patterns and objects regardless of their position within the input data.
+    - work well in computer vision
+    - values in the filters are treated as parameters that deep neural networks can learn, and the model could be more rebust
 - Padding: 
     - used in convolutional neural networks to add extra pixels to the edges of an image
     - solve the problem of shrinking output and throwing away info at the edges
@@ -338,11 +339,8 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Pooling Layer
     - max pooling: reduces the dimensions of the input by taking the maximum value of a group of adjacent pixels in the input image.
     - intuition: if a feature is detected anywhere in the filter then keep a high number, if not, max number would still be quite small
-    - reduces the dimensions of the input, which makes the model more computationally efficient and reduces the number of parameters that the model needs to learn.
-    - model is less sensitive to small shifts in the position of features in the input.
-    - prevent overfitting, since it reduces the number of parameters that the model needs to learn.
     - input shape $(n_h, n_w, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c)$, p = 0 in most cases
     - average pooling: reduces the dimensions of the input by taking the average value of a group of adjacent pixels in the input image.
     - hyperparameters: filter size f, stride s, no parameters for gradient descent to learn
-- h,w decrease, c increase
+- Going to deeper layers of CNN, usually $n_h, n_w$ would decrease, and $n_c$ would increase
 - common pattern: one or more conv -> pool -> one or more conv -> pool -> fc -> fc -> fc -> softmax
