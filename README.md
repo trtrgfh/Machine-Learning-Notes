@@ -20,7 +20,7 @@ Field of study that gives conputers the ability to learn without explicit progra
 4. [Strategy for Machinel Learning Projects](#strategmlyproject)
 5. [Convolutional Neural Network](#cnn)
     1. [Deep Convolutional Models](#deepcnnmodel)
-
+    2. [Pratical Advices for Using ConvNet](#advicescnn)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -254,7 +254,7 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Then since gradient descent trys to minimize the cost, we add a negative sign at the front of the function. 
 - For more numerical accuracy, use linear activation instead of softmax activation in the neural network, and add from_logits=True in the loss functoin when compile the model.
 
-## Strategy for Machinel Learning Projects <a name="strategmlyproject"></a>
+# Strategy for Machinel Learning Projects <a name="strategmlyproject"></a>
 - Orthogonalization: making the different components of the model more independent from each other.
 
 ### Set Up Your Gaol <a name="strategmlyproject"></a>
@@ -311,7 +311,7 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Can lead to improved performance and faster, more efficient training.
 - Need large amounts of data and the potential for overfitting.
 
-## Convolutional Neural Network <a name="cnn"></a>
+# Convolutional Neural Network <a name="cnn"></a>
 - CNN is particularly well-suited for image and video processing tasks
     - a convolutional layer would have a lot fewer parameters because
         - Parameter sharing: a feature detector that's useful in one part of the image is probably useful in another part of the image
@@ -335,12 +335,12 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - linear regression: wx+b, CNN: X * filter + b  
     - input shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l-1]})$
     - filter shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]})$
-    - output shape $(n_h^{[l]} = \lfloor \frac{n_h^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1 ,n_w^{[l]} = \lfloor \frac{n_w^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1, n_c^{[l]})$
+    - output shape $(n_h^{[l]} = \lfloor \frac{n_h^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1 ,n_w^{[l]} = \lfloor \frac{n_w^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1, n_c^{[l]})$, where $n_c^{[l]})$ is the number of filters 
     - activations shape $(m, n_h^{[l]}, n_w^{[l]}, n_c^{[l]})$
     - weights shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]}, n_c^{[l]})$
     - bias shape $(1, 1, 1, n_c^{[l]})$
 - Pooling Layer
-    - max pooling: reduces the dimensions of the input by taking the maximum value of a group of adjacent pixels in the input image.
+    - max pooling: reduces the dimensions$(n_h, n_w)$ of the input by taking the maximum value of a group of adjacent pixels in the input image.
     - intuition: if a feature is detected anywhere in the filter then keep a high number, if not, max number would still be quite small
     - input shape $(n_h, n_w, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c)$, p = 0 in most cases
     - average pooling: reduces the dimensions of the input by taking the average value of a group of adjacent pixels in the input image.
@@ -348,40 +348,47 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Going into deeper layers of CNN, usually $n_h, n_w$ would decrease, and $n_c$ would increase
 - Common pattern: one or more CONV -> POOL -> one or more CONV -> POOL -> FC -> FC -> FC -> softmax
 
-### Deep Convolutional Models <a name="deepcnnmodel"></a>
-- LeNet-5: used to recognize hand-written digits
-    - $\text{Image} \rightarrow \text{CONV}(n_c=6,f=5,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) \rightarrow \text{CONV}(n_c=16,f=6,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) $
+## Deep Convolutional Models <a name="deepcnnmodel"></a>
+### LeNet-5: used to recognize hand-written digits
+- $\text{Image} \rightarrow \text{CONV}(n_c=6,f=5,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) \rightarrow \text{CONV}(n_c=16,f=6,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) $
     $\rightarrow \text{FC} \rightarrow \text{FC} \rightarrow \hat y$
-- AlexNet
-    - $Image(227,227,3) \rightarrow \text{CONV}(n_c=96,f=11,s=4) \rightarrow \text{MAX-POOL}(f=3,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=256,f=5,s=1) $
+### AlexNet
+- $Image(227,227,3) \rightarrow \text{CONV}(n_c=96,f=11,s=4) \rightarrow \text{MAX-POOL}(f=3,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=256,f=5,s=1) $
     $\rightarrow \text{MAX-POOL}(f=3, s=2) \rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) \rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) $
     $\rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) \rightarrow \text{MAX-POOL}(f=3, s=2) \rightarrow \text{FC} \rightarrow \text{FC} $ 
     $\rightarrow \text{Softmax}$
     - Similar to LeNet5, but much bigger and uses ReLU activations instead of sigmoid/tanh
-- VGG-16
-    - $Image(224,224,3) \rightarrow \text{CONV}(\text{"same"},n_c=64,f=3,s=1)*2 \rightarrow \text{MAX-POOL}(f=2,s=2) $
+### VGG-16
+- $Image(224,224,3) \rightarrow \text{CONV}(\text{"same"},n_c=64,f=3,s=1)*2 \rightarrow \text{MAX-POOL}(f=2,s=2) $
     $\rightarrow \text{CONV}(\text{"same"},n_c=128,f=3,s=1)*2 \rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=256,f=3,s=1)*3$
     $\rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3 \rightarrow \text{MAX-POOL}(f=2,s=2)$
     $\rightarrow \text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3 \rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{FC} \rightarrow \text{FC} $ 
     $\rightarrow \text{Softmax}$
-- Vanishing gradient
-    - Very deep networks often have the problem of vanishing gradients
-        - gradient is a measure of how much the output of a function changes when you change the inputs, and it's usually represented as a vector of partial derivatives
-        - as we backprop from the output layer to the first layer, the gradients are multiplied by the weights on each layer and passed on to the previous layer
-        - if the weights of the layers are small, the gradients can become very small (vanishing gradients) as they pass through the network, and the updates to the parameters will be very small as well. This can lead to slow convergence and poor performance.
-        - small gradients may also make the updates to the parameters become very sensitive to small changes in the gradients. This can lead to oscillations or other unstable behavior during training
-        - so with network depth increases, the accuracy could get saturated and the performance of the model could degrade
-- ResNet
-    - residual block allows you to train much deeper network with the training error keeps going down
-    - e.g.
-        - main paht: $a^{[l]} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow a^{[l+2]}$
-        - math expression: $a^{[l]} \rightarrow z^{[l+1]}=W^{[l+1]}a^{[l]}b^{[l+1]} \rightarrow a^{[l+1]}=g(z^{[l+1]}) \rightarrow z^{[l+2]}=W^{[l+2]}a^{[l+1]}b^{[l+2]} \rightarrow a^{[l+2]}=g(z^{[l+2]})$
-        - then a shortcut/skip-connection from $a^{[l]}$ to $a^{[l+2]}$ that passes the value of $a^{[l]}$ to $a^{[l+2]}$ which makes $a^{[l+2]}=g(z^{[l+2]}+a^{[l]})$, and since $z^{[l+2]}+a^{[l]}$ need to have same dimension, "same" convolutional layers are used. 
-        - if $a^{[l]}$ has smaller dimension, you can have $Wa^{[l]}$ to increase the dimension where W is $a^{[l]}$ with zero padding or use the convolutional block. 
-    - suppose L2 regularization is used, and weight and bias shrinks to 0. Also, all values of A>0 because of ReLU activation (max(0, z))
-    - then, $a^{[l+2]}=g(W^{[l+2]}a^{[l+1]}b^{[l+2]}+a^{[l]}) = g(a^{[l]}) = a^{[l]}$ which makes the identity function easy to learn for residual block 
-    - so adding a residual block in the middle or the end of a network doesn't hurt performance as the regularization will skip over them if those layers were not useful
-    - if the hidden layers in the residual block learns something useful, then the performance could be even better than just learning the identity function
+### Vanishing gradient
+- Very deep networks often have the problem of vanishing gradients
+    - gradient is a measure of how much the output of a function changes when you change the inputs, and it's usually represented as a vector of partial derivatives
+    - as we backprop from the output layer to the first layer, the gradients are multiplied by the weights on each layer and passed on to the previous layer
+    - if the weights of the layers are small, the gradients can become very small (vanishing gradients) as they pass through the network, and the updates to the parameters will be very small as well. This can lead to slow convergence and poor performance.
+    - small gradients may also make the updates to the parameters become very sensitive to small changes in the gradients. This can lead to oscillations or other unstable behavior during training
+    - so with network depth increases, the accuracy could get saturated and the performance of the model could degrade
+### ResNet
+- residual block allows you to train much deeper network with the training error keeps going down
+- e.g.
+    - main paht: $a^{[l]} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow a^{[l+2]}$
+    - math expression: $a^{[l]} \rightarrow z^{[l+1]}=W^{[l+1]}a^{[l]}b^{[l+1]} \rightarrow a^{[l+1]}=g(z^{[l+1]}) \rightarrow z^{[l+2]}=W^{[l+2]}a^{[l+1]}b^{[l+2]} \rightarrow a^{[l+2]}=g(z^{[l+2]})$
+    - then a shortcut/skip-connection from $a^{[l]}$ to $a^{[l+2]}$ that passes the value of $a^{[l]}$ to $a^{[l+2]}$ which makes $a^{[l+2]}=g(z^{[l+2]}+a^{[l]})$, and since $z^{[l+2]}+a^{[l]}$ need to have same dimension, "same" convolutional layers are used. 
+    - if $a^{[l]}$ has smaller dimension, you can have $Wa^{[l]}$ to increase the dimension where W is $a^{[l]}$ with zero padding or use the convolutional block. 
+- suppose L2 regularization is used, and weight and bias shrinks to 0. Also, all values of A>0 because of ReLU activation (max(0, z))
+- then, $a^{[l+2]}=g(W^{[l+2]}a^{[l+1]}b^{[l+2]}+a^{[l]}) = g(a^{[l]}) = a^{[l]}$ which makes the identity function easy to learn for residual block 
+- so adding a residual block in the middle or the end of a network doesn't hurt performance as the regularization will skip over them if those layers were not useful
+- if the hidden layers in the residual block learns something useful, then the performance could be even better than just learning the identity function
 ![ResNet](https://user-images.githubusercontent.com/73056232/208222836-68096b1f-8d31-4bd2-a8ab-22bb95bc6a40.png)
-### Pratical Advices for Using ConvNet <a name="advicescnn"></a>
+### One by one convolution
+- used to shrink the number of channels$(n_c)$ to increase computational efficiency 
+- input shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l-1]})$
+- filter shape $(1, 1, n_c^{[l-1]})$
+- output shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l]})$, where $n_c^{[l]}$ is the number of filters
+- if $n_c^{[l]} == n_c^{[l-1]}$, then the effect is it just has nonlinearity and allows the model to learn a more complex function by adding another layer
+
+## Pratical Advices for Using ConvNet <a name="advicescnn"></a>
 
