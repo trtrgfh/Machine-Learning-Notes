@@ -326,33 +326,33 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - values in the filters are treated as parameters that deep neural networks can learn, and the model could be more rebust
     
 ### Padding: 
-- used in convolutional neural networks to add extra pixels to the edges of an image
-- solve the problem of shrinking output and throwing away info at the edges
-- valid convolution: no padding, input shape $(n_h, n_w)$, filter shape (f, f), output shape $(n_h - f + 1, n_w - f + 1)$
-- same convolutoin: pad so that the ouput size is the same as the input size.  output shape (n_h + 2p - f + 1, n_w + 2p - f + 1), p = $\frac{f - 1}{2}$, filter size is usually a odd number
+- Used in convolutional neural networks to add extra pixels to the edges of an image
+- Solve the problem of shrinking output and throwing away info at the edges
+- Valid convolution: no padding, input shape $(n_h, n_w)$, filter shape (f, f), output shape $(n_h - f + 1, n_w - f + 1)$
+- Same convolutoin: pad so that the ouput size is the same as the input size.  output shape (n_h + 2p - f + 1, n_w + 2p - f + 1), p = $\frac{f - 1}{2}$, filter size is usually a odd number
 
 ### Stride:
-- number of pixels that the convolutional kernel (filter) moves when it slides across the input image.
-- input shape $(n_h, n_w)$, filter shape (f, f), output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1)$
+- Number of pixels that the convolutional kernel (filter) moves when it slides across the input image.
+- Input shape $(n_h, n_w)$, filter shape (f, f), output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1)$
 
 ### Convolutions Over Volumn:
-- input shape $(n_h, n_w, n_c)$, filter shape $(f, f, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c^{'})$, where $n_c$ is the number of channel/depth and $n_c^{'}$ is the number of filters
+- Input shape $(n_h, n_w, n_c)$, filter shape $(f, f, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c^{'})$, where $n_c$ is the number of channel/depth and $n_c^{'}$ is the number of filters
 
 ### Convolution Layer l:
-- linear regression: wx+b, CNN: X * filter + b  
-- input shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l-1]})$
-- filter shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]})$
-- output shape $(n_h^{[l]} = \lfloor \frac{n_h^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1 ,n_w^{[l]} = \lfloor \frac{n_w^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1, n_c^{[l]})$, where $n_c^{[l]})$ is the number of filters 
-- activations shape $(m, n_h^{[l]}, n_w^{[l]}, n_c^{[l]})$
-- weights shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]}, n_c^{[l]})$
-- bias shape $(1, 1, 1, n_c^{[l]})$
+- Linear regression: wx+b, CNN: X * filter + b  
+- Input shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l-1]})$
+- Filter shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]})$
+- Output shape $(n_h^{[l]} = \lfloor \frac{n_h^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1 ,n_w^{[l]} = \lfloor \frac{n_w^{[l-1]} + 2p^{[l]} - f^{[l]}}{s^{[l]}} \rfloor + 1, n_c^{[l]})$, where $n_c^{[l]})$ is the number of filters 
+- Activations shape $(m, n_h^{[l]}, n_w^{[l]}, n_c^{[l]})$
+- Weights shape $(f^{[l]}, f^{[l]}, n_c^{[l-1]}, n_c^{[l]})$
+- Bias shape $(1, 1, 1, n_c^{[l]})$
 
 ### Pooling Layer
-- max pooling: reduces the dimensions$(n_h, n_w)$ of the input by taking the maximum value of a group of adjacent pixels in the input image.
-- intuition: if a feature is detected anywhere in the filter then keep a high number, if not, max number would still be quite small
-- input shape $(n_h, n_w, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c)$, p = 0 in most cases
-- average pooling: reduces the dimensions of the input by taking the average value of a group of adjacent pixels in the input image.
-- hyperparameters: filter size f, stride s, no parameters for gradient descent to learn
+- Max pooling: reduces the dimensions$(n_h, n_w)$ of the input by taking the maximum value of a group of adjacent pixels in the input image.
+- Intuition: if a feature is detected anywhere in the filter then keep a high number, if not, max number would still be quite small
+- Input shape $(n_h, n_w, n_c)$, output shape $(\lfloor \frac{n_h + 2p - f}{s} \rfloor + 1 ,\lfloor \frac{n_w + 2p - f}{s} \rfloor + 1, n_c)$, p = 0 in most cases
+- Average pooling: reduces the dimensions of the input by taking the average value of a group of adjacent pixels in the input image.
+- Hyperparameters: filter size f, stride s, no parameters for gradient descent to learn
 
 ### Common Pattern
 - Going into deeper layers of CNN, usually $n_h, n_w$ would decrease, and $n_c$ would increase
@@ -361,7 +361,7 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 ## Deep Convolutional Models <a name="deepcnnmodel"></a>
 
 ### LeNet-5: 
-- used to recognize hand-written digits
+- Used to recognize hand-written digits
 - $\text{Image} \rightarrow \text{CONV}(n_c=6,f=5,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) \rightarrow \text{CONV}(n_c=16,f=6,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) $
     $\rightarrow \text{FC} \rightarrow \text{FC} \rightarrow \hat y$
 
@@ -388,26 +388,43 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - so with network depth increases, the accuracy could get saturated and the performance of the model could degrade
 
 ### ResNet
-- residual block allows you to train much deeper network with the training error keeps going down
+- Residual block allows you to train much deeper network with the training error keeps going down
 - e.g.
     - main paht: $a^{[l]} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow a^{[l+2]}$
     - math expression: $a^{[l]} \rightarrow z^{[l+1]}=W^{[l+1]}a^{[l]}b^{[l+1]} \rightarrow a^{[l+1]}=g(z^{[l+1]}) \rightarrow z^{[l+2]}=W^{[l+2]}a^{[l+1]}b^{[l+2]} \rightarrow a^{[l+2]}=g(z^{[l+2]})$
     - then a shortcut/skip-connection from $a^{[l]}$ to $a^{[l+2]}$ that passes the value of $a^{[l]}$ to $a^{[l+2]}$ which makes $a^{[l+2]}=g(z^{[l+2]}+a^{[l]})$, and since $z^{[l+2]}+a^{[l]}$ need to have same dimension, "same" convolutional layers are used. 
     - if $a^{[l]}$ has smaller dimension, you can have $Wa^{[l]}$ to increase the dimension where W is $a^{[l]}$ with zero padding or use the convolutional block. 
-- suppose L2 regularization is used, and weight and bias shrinks to 0. Also, all values of A>0 because of ReLU activation (max(0, z))
-- then, $a^{[l+2]}=g(W^{[l+2]}a^{[l+1]}b^{[l+2]}+a^{[l]}) = g(a^{[l]}) = a^{[l]}$ which makes the identity function easy to learn for residual block 
-- so adding a residual block in the middle or the end of a network doesn't hurt performance as the regularization will skip over them if those layers were not useful
-- if the hidden layers in the residual block learns something useful, then the performance could be even better than just learning the identity function
+- Suppose L2 regularization is used, and weight and bias shrinks to 0. Also, all values of A>0 because of ReLU activation (max(0, z))
+- Then, $a^{[l+2]}=g(W^{[l+2]}a^{[l+1]}b^{[l+2]}+a^{[l]}) = g(a^{[l]}) = a^{[l]}$ which makes the identity function easy to learn for residual block 
+- So adding a residual block in the middle or the end of a network doesn't hurt performance as the regularization will skip over them if those layers were not useful
+- If the hidden layers in the residual block learns something useful, then the performance could be even better than just learning the identity function
 ![ResNet](https://user-images.githubusercontent.com/73056232/208222836-68096b1f-8d31-4bd2-a8ab-22bb95bc6a40.png)
 
-### One by one convolution
-- used to shrink the number of channels$(n_c)$ to increase computational efficiency 
-- input shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l-1]})$
-- filter shape $(1, 1, n_c^{[l-1]})$
-- output shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l]})$, where $n_c^{[l]}$ is the number of filters
-- if $n_c^{[l]} == n_c^{[l-1]}$, then the effect is it just has nonlinearity and allows the model to learn a more complex function by adding another layer
-
 ### One by One Convolution
+- Used to shrink the number of channels$(n_c)$ to increase computational efficiency 
+- Input shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l-1]})$
+- Filter shape $(1, 1, n_c^{[l-1]})$
+- Output shape $(n_h^{[l-1]}, n_w^{[l-1]}, n_c^{[l]})$, where $n_c^{[l]}$ is the number of filters
+- If $n_c^{[l]} == n_c^{[l-1]}$, then the effect is it just has nonlinearity and allows the model to learn a more complex function by adding another layer
+
+### Inception Network
+- Intuition: use a combination of 1x1, 3x3, and 5x5 convolutions and pooling to extract features from the input, and stacked the result on top of each other.
+- Bottleneck layer: add a 1x1 convolution layer before the 3x3, or 5x5 convolutions can reduce the conputational cost significantly without hurting the performance
+- Add a 1x1 convolution layer after the pooling layer to reduce the number of channels
+
+### MobileNet
+- Lower computional cost at deployment
+- Useful for mobile and embedded vision applications
+- Depthwise-separable convolution
+    - reduces the number of parameters and the conputation cost while still preserving the ability to capture important features from the input.
+    - depthwise convolution: process each channel of the input separately, using a separate convolutional kernel(filter) for each channel.
+    - pointwise convolution: 1x1 convolution
+    - pattern: input shape $(n_h, n_w, n_c)$ -> depthwise convolution with $n_c$ separated filters of shape (f, f)-> output $(n_{out}, n_{out}, n_c)$ -> pointwise convolution with filter shape $(1, 1, n_c)$ -> output shape $(n_{out}, n_{out}, n_c^{'})$
+- A normal convolution would be: input shape $(n_h, n_w, n_c)$ -> filters shape $(f, f, n_c)$ -> output shape $(n_{out}, n_{out}, n_c^{'})$, and it will be a lot more conputational expensive than the depthwise-separable convolution
+
+### EfficientNet
+- Designed to achieve a high level of accuracy on image classification tasks while also being computationally efficient, using a combination of scaling techniques to adjust the depth, width, and resolution of the network.
+- You can use the open source implementations of EfficientNet to find a good trade-off between depth, width, and resolution
 
 ## Pratical Advices for Using ConvNet <a name="advicescnn"></a>
 
