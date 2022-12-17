@@ -382,5 +382,6 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - then, $a^{[l+2]}=g(W^{[l+2]}a^{[l+1]}b^{[l+2]}+a^{[l]}) = g(a^{[l]}) = a^{[l]}$ which makes the identity function easy to learn for residual block 
     - so adding a residual block in the middle or the end of a network doesn't hurt performance as the regularization will skip over them if those layers were not useful
     - if the hidden layers in the residual block learns something useful, then the performance could be even better than just learning the identity function
-   
+![ResNet](https://user-images.githubusercontent.com/73056232/208222836-68096b1f-8d31-4bd2-a8ab-22bb95bc6a40.png)
 ### Pratical Advices for Using ConvNet <a name="advicescnn"></a>
+
