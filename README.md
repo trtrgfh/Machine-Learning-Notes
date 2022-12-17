@@ -148,6 +148,7 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - Make gradient descent less oscillate.
 
 ### Weight Initialization <a name="weightinit"></a>
+- gradient is a measure of how much the output of a function changes when you change the inputs, and it's usually represented as a vector of partial derivatives
 - Proper weight initialization can help speed up training, improve the network's ability to learn, and prevent issues such as vanishing or exploding gradients
 - In deep network (large number of layers), if $W^{[L]} > I$(Identity Matrix) the value of predicted y could be large (explode), $W^{[L]} < I$ the value of predicted y could be too small (vanish)
 - For ReLU activation, use $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]}})$
@@ -364,16 +365,20 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     $\rightarrow \text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3 \rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{FC} \rightarrow \text{FC} $ 
     $\rightarrow \text{Softmax}$
 - ResNet
+    - Very deep networks often have the problem of vanishing gradients
+        - gradient is a measure of how much the output of a function changes when you change the inputs, and it's usually represented as a vector of partial derivatives
+        - during backprop, the gradients are calculated by starting at the output layer and working backwards through the layers of the network. At each layer, the gradients are multiplied by the weights of that layer and passed on to the previous layer. If the weights of the layers are small, the gradients can become very small (vanishing gradients) as they pass through the network.
+        - if the gradients are too small, the updates to the parameters will be very small as well, which means that the network will not make significant progress during training. This can lead to slow convergence and poor performance.
+        - so with network depth increases, the accuracy would get saturated and the performance of the model would degrades
     - residual block allows you to train much deeper network with the training error keeps going down
     - e.g.
         - main paht: $a^{[l]} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow \text{linear} \rightarrow \text{ReLU} \rightarrow a^{[l+2]}$
         - math expression: $a^{[l]} \rightarrow z^{[l+1]}=W^{[l+1]}a^{[l]}b^{[l+1]} \rightarrow a^{[l+1]}=g(z^{[l+1]}) \rightarrow z^{[l+2]}=W^{[l+2]}a^{[l+1]}b^{[l+2]} \rightarrow a^{[l+2]}=g(z^{[l+2]})$
         - then a shortcut/skip-connection from $a^{[l]}$ to $a^{[l+2]}$ that passes the value of $a^{[l]}$ to $a^{[l+2]}$ which makes $a^{[l+2]}=g(z^{[l+2]}+a^{[l]})$, and since $z^{[l+2]}+a^{[l]}$ need to have same dimension, "same" convolutional layers are used. 
-        - if $a^{[l]}$ has smaller dimension, you can add a weight that's $a^{[l]}$ after zero padding to increase the dimension of $Wa^{[l]}$ 
-    - suppose L2 regularization is used, and weight and bias shrinks to 0. Also, all values of A>0 because of ReLU activation (max(0, z))
-    - then, $a^{[l+2]}=g(W^{[l+2]}a^{[l+1]}b^{[l+2]}+a^{[l]}) = g(a^{[l]}) = a^{[l]}$
-    - the identity function is easy for residual block to learn 
-    - so adding a residual block in the middle or the end of a network doesn't hurt performance
-    - if the hidden layers in the residual block learns something useful, then it could be even better than just learning the identity function
-    - without residual block, as you go deeper into the network, it's difficult to choose parameters that learn even the identity function, so the result become worse
+        - if $a^{[l]}$ has smaller dimension, you can have $Wa^{[l]}$ to increase the dimension where W is $a^{[l]}$ with zero padding or use the convolutional block. 
+        - suppose L2 regularization is used, and weight and bias shrinks to 0. Also, all values of A>0 because of ReLU activation (max(0, z))
+        - then, $a^{[l+2]}=g(W^{[l+2]}a^{[l+1]}b^{[l+2]}+a^{[l]}) = g(a^{[l]}) = a^{[l]}$ which means the identity function is easy for residual block to learn 
+        - so adding a residual block in the middle or the end of a network doesn't hurt performance
+        - if the hidden layers in the residual block learns something useful, then it could be even better than just learning the identity function
+   
 ### Pratical Advices for Using ConvNet <a name="advicescnn"></a>
