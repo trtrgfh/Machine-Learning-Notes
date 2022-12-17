@@ -349,10 +349,21 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 
 ### Deep Convolutional Models <a name="deepcnnmodel"></a>
 - LeNet-5: used to recognize hand-written digits
-    - $\text{Image} -> \text{CONV}(n_c=6,f=5,s=1) -> \text{AVG-POOL}(f=2, s=2) -> \text{CONV}(n_c=16, f=6, s=1) -> \text{AVG-POOL}(f=2, s=2) -> \text{FC} -> \text{FC} -> \hat y$
+    - $\text{Image} \rightarrow \text{CONV}(n_c=6,f=5,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) \rightarrow \text{CONV}(n_c=16,f=6,s=1) \rightarrow \text{AVG-POOL}(f=2,s=2) $
+    $\rightarrow \text{FC} \rightarrow \text{FC} \rightarrow \hat y$
 - AlexNet
-    - $image(227,227,3) -> CONV(n_c=96,f=11,s=4) -> MaxPool(f=2, s=2) -> CONV(n_c=16, f=6, s=1) -> avg pool(f=2, s=2) -> FC -> FC -> \hat y$
- 
-VGG
-ResNet
+    - $Image(227,227,3) \rightarrow \text{CONV}(n_c=96,f=11,s=4) \rightarrow \text{MAX-POOL}(f=3,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=256,f=5,s=1) $
+    $\rightarrow \text{MAX-POOL}(f=3, s=2) \rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) \rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) $
+    $\rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) \rightarrow \text{MAX-POOL}(f=3, s=2) \rightarrow \text{FC} \rightarrow \text{FC} $ 
+    $\rightarrow \text{Softmax}$
+    - Similar to LeNet5, but much bigger and uses ReLU activations instead of sigmoid/tanh
+- VGG-16
+    - $Image(224,224,3) \rightarrow \text{CONV}(\text{"same"},n_c=64,f=3,s=1)*2 \rightarrow \text{MAX-POOL}(f=2,s=2) $
+    $\rightarrow \text{CONV}(\text{"same"},n_c=128,f=3,s=1)*2 \rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=256,f=3,s=1)*3$
+    $\rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3 \rightarrow \text{MAX-POOL}(f=2,s=2)$
+    $\rightarrow \text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3 \rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{FC} \rightarrow \text{FC} $ 
+    $\rightarrow \text{Softmax}$
+- ResNet
+    - allows you to train much deeper network with the training error keeps going down
+
 ### Pratical Advices for Using ConvNet <a name="advicescnn"></a>
