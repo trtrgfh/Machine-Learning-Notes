@@ -19,8 +19,9 @@ Field of study that gives conputers the ability to learn without explicit progra
     3. [Hyperparameters Tuning, Batch Norm, Softmax](#tuning_batchnorm_softmax)
 4. [Strategy for Machinel Learning Projects](#strategmlyproject)
 5. [Convolutional Neural Network](#cnn)
-    1. [Deep Convolutional Models](#deepcnnmodel)
-    2. [Pratical Advices for Using ConvNet](#advicescnn)
+    1. [Foundations of CNN](#fundamentalscnn)
+    2. [Deep Convolutional Models](#deepcnnmodel)
+    3. [Pratical Advices for Using ConvNet](#advicescnn)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -312,6 +313,8 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Need large amounts of data and the potential for overfitting.
 
 # Convolutional Neural Network <a name="cnn"></a>
+
+## Foundations of CNN <a name="fundamentalscnn"></a>
 - CNN is particularly well-suited for image and video processing tasks
     - a convolutional layer would have a lot fewer parameters because
         - Parameter sharing: a feature detector that's useful in one part of the image is probably useful in another part of the image
