@@ -21,7 +21,7 @@ Field of study that gives conputers the ability to learn without explicit progra
 5. [Convolutional Neural Network](#cnn)
     1. [Foundations of CNN](#fundamentalscnn)
     2. [Deep Convolutional Models](#deepcnnmodel)
-    3. [Pratical Advices for Using ConvNet](#advicescnn)
+    3. [Object Detection](#objectdetect)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -63,16 +63,16 @@ One downside of using only one decision tree is that small changes in the traini
     - $\sigma(z) = \frac{1}{(1 + e^{-z})}$, tanh(z) = $\frac{(e^z - e^{-z})}{(e^z + e^{-z})}$, ReLU(z) = $max(0, z)$, leaky ReLU(z) = $max(0, z) + \alpha * min(0, z)$
     - If use a linear activation function, then no matter how many layers you have, all it's doing is computing a linear activation function.
 - Forward propagation for layer l:
-    - $Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} (L2 reg: +\frac{\lambda}{2m}||W||_2^2)$
-    - $A^{[l]} = g^{[l]}(Z^{[l]})$
+    - $Z^{[l]} = W^{[l]}A^{[l-1]} + b^{[l]} (L2 reg: +\frac{\lambda}{2m}||W||_2^2)$, where shape of $Z^{[l]}$ is $(n^{[l]}, m)$
+    - $A^{[l]} = g^{[l]}(Z^{[l]})$, where shape of $A^{[l]}$ is $(n^{[l]}, m)$
 - Backward propagation for layer l:
-    - $dZ^{[l]} = A^{[l]} - Y$
-    - $dW^{[l]} = \frac{1}{m}dZ^{[l]}A^{[l-1]T} (L2 reg: +\frac{\lambda}{m}W^{[l]})$
-    - $db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]},\  axis=1,\  keepdims=True)$
-    - $dA^{[l-1]} = W^{[l]T}dZ^{[l]} * g^{'[l-1]}(Z^{[l-1]})$
+    - $dZ^{[l]} = A^{[l]} - Y$, where shape of $dZ^{[l]}$ is $(n^{[l]}, m)$
+    - $dW^{[l]} = \frac{1}{m}dZ^{[l]}A^{[l-1]T} (L2 reg: +\frac{\lambda}{m}W^{[l]})$, where shape of $dW^{[l]}$ is $(n^{[l]}, n^{[l-1]})$
+    - $db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]},\  axis=1,\  keepdims=True)$, where shape of $db^{[l]}$ is $(n^{[l]}, 1)$
+    - $dA^{[l-1]} = W^{[l]T}dZ^{[l]} * g^{'[l-1]}(Z^{[l-1]})$, where shape of $dA^{[l]}$ is $(n^{[l]}, m)$
 - Gradient Descent:
-    - $W^{[l]} = W^{[l]} - \alpha dW^{[l]}$
-    - $b^{[l]} = b^{[l]} - \alpha db^{[l]}$
+    - $W^{[l]} = W^{[l]} - \alpha dW^{[l]}$, where shape of $W^{[l]}$ is $(n^{[l]}, n^{[l-1]})$
+    - $b^{[l]} = b^{[l]} - \alpha db^{[l]}$, where shape of $b^{[l]}$ is $(n^{[l]}, 1)$
 
 ## Unsupervised Learning <a name="unsupervisedlearning"></a>
 - Unsupervised learning is when a model is trained on an unlabeled dataset. The model is not provided with correct output examples for a given input, and the goal is to find hidden patterns or structures in the data. 
@@ -141,7 +141,7 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - Make keep_prob lower at layers with more neurons to prevent overfitting
 
 ### Data Augumentation <a name="dataaug"></a>
-- Technique used to artificially increase the size of a training dataset by creating modified versions of existing data (e.g. image: random rotation, distortion)
+- Technique used to artificially increase the size of a training dataset by creating modified versions of existing data (e.g. image: random rotation, distortion, color shifting)
 
 ### Normalizing Input <a name="normalinput"></a>
 - Used to ensure that all of the input data is on the same scale, which can make the training process more efficient and improve the performance of the model.
@@ -297,10 +297,14 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Another way to address the data mismatch problem is to use the artificial data synthesis, e.g. creat more data similar to the dev set by addding car noise to the original audio. 
 
 ### Learning From Multiple Tasks <a name="multitask"></a>
-- Transfer learning: A model trained on one task is used to perform a different but related task. It's useful when:
-    - both tasks have the same input (e.g.both has image input)
-    - not enough data available to train a model from scratch on the second task. 
-    - low level feature learned from the first task is helpful to the second task 
+- Transfer learning: A model trained on one task is used to perform a different but related task. 
+    - useful when:
+        - both tasks have the same input (e.g.both has image input)
+        - not enough data available to train a model from scratch on the second task. 
+        - low level feature learned from the first task is helpful to the second task 
+    - if not enough data, you may freeze all the layers expect the output layer, and just train the parameters accosiate with the output layer
+    - if more data is obtained, you may unfreeze a few more hidden layers previous from the output layers and train parameters on the unfreezed layers
+    - if lots of data, you may use the parameters of the pre-train model as initializations and train the whole network using the data you have.
 - Multi-task learning: - Used when you want to predict mulitple objects at the same time (unlike softmax, one image can have multiple label)
     - tasks which have shared lower-level feature
     - amound of data for each task is usually quite similar
@@ -426,5 +430,22 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Designed to achieve a high level of accuracy on image classification tasks while also being computationally efficient, using a combination of scaling techniques to adjust the depth, width, and resolution of the network.
 - You can use the open source implementations of EfficientNet to find a good trade-off between depth, width, and resolution
 
-## Pratical Advices for Using ConvNet <a name="advicescnn"></a>
+## Object Detection <a name="objectdetect"></a>
 
+### Object Localization
+- Convolutional network with softmax output 
+- Target value example: $y = [P_c, b_x, b_y, b_h, b_w, c_1, ..., c_i]$, where $P_c$ is whether an object is detected, $b_i$ are the parameters of the bounding box, and $c_i$ are the classes of the objects.
+- If $P_c$ = 0, then the rest of value is negligible
+- Loss function: $L(\hat y, y) = (\hat y_1 - y_1)^2 + (\hat y_2 - y_2)^2 + ... + (\hat y_8 - y_8)^2$ if $y_1 = 1, (\hat y_1 - y_1)^2$ if $y_1 = 0$
+- In practice, common to use logistic loss for $P_c$, softmax loss for $c_i$, sqaure error for $b_i$ 
+    
+### Landmark Detection
+- Target value example: $y = [P_c, l_{1x}, l_{1y}, ..., l_{ix}, l_{iy}]$, where $P_c$ is whether the object is detected, $l_{ix}, l_{iy}$ are the coordinates of the landmarks you want to recognize
+
+### Object Detection
+- Sliding window detection
+    -  dividing the image or video into a grid of overlapping windows, and applying a detection algorithm (ConvNet) to each window to identify the presence of the desired object or feature, but it's computational expensive to do it sequentially.
+    -  convolutional implementation:
+        - trun FC layers into convolutional layers: treat the set of neurons in the first FC layer as a (1, 1, $n^{[l]}$) volume, and then use 1x1 filters to get (1, 1, $n^{[l+i]}$) volumes for the next FC layers 
+        - e.g. suppose the ConvNet is trained with input shape (14, 14, 3) and output shape (1, 1, 4), and the test set has input shape (16, 16, 3). Then, if we just run the same ConvNet with the test set, the model will have a output of shape (2, 2, 4) which is consist of 4 (1, 1, 4) volumes that correspond to the results of 4 overlapping windows
+        - with convolutional implementation, the algorithm makes all the predictions at the same time by one forward pass through the ConvNet
