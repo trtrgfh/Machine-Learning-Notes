@@ -369,18 +369,11 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Image -> $\text{CONV}(n_c=6,f=5,s=1)$ -> $\text{AVG-POOL}(f=2,s=2)$ -> $\text{CONV}(n_c=16,f=6,s=1)$ -> $\text{AVG-POOL}(f=2,s=2)$ -> FC -> FC -> $\hat y$
 
 ### AlexNet
-- $Image(227,227,3) \rightarrow \text{CONV}(n_c=96,f=11,s=4) \rightarrow \text{MAX-POOL}(f=3,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=256,f=5,s=1) $
-    $\rightarrow \text{MAX-POOL}(f=3, s=2) \rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) \rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) $
-    $\rightarrow \text{CONV}(\text{"same"},n_c=384,f=3,s=1) \rightarrow \text{MAX-POOL}(f=3, s=2) \rightarrow \text{FC} \rightarrow \text{FC} $ 
-    $\rightarrow \text{Softmax}$
-    - Similar to LeNet5, but much bigger and uses ReLU activations instead of sigmoid/tanh
+- Image(227, 227, 3) -> $\text{CONV}(n_c=96,f=11,s=4)$ -> $\text{MAX-POOL}(f=3,s=2)$ -> $\text{CONV}(\text{"same"},n_c=256,f=5,s=1)$ -> $\text{MAX-POOL}(f=3,s=2)$ -> $\text{CONV}(\text{"same"},n_c=384,f=3,s=1)$ -> $\text{CONV}(\text{"same"},n_c=384,f=3,s=1)$ -> $\text{CONV}(\text{"same"},n_c=384,f=3,s=1)$ -> $\text{MAX-POOL}(f=3, s=2)$ -> FC -> FC -> Softmax
+- Similar to LeNet5, but much bigger and uses ReLU activations instead of sigmoid/tanh
 
 ### VGG-16
-- $Image(224,224,3) \rightarrow \text{CONV}(\text{"same"},n_c=64,f=3,s=1)*2 \rightarrow \text{MAX-POOL}(f=2,s=2) $
-    $\rightarrow \text{CONV}(\text{"same"},n_c=128,f=3,s=1)*2 \rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=256,f=3,s=1)*3$
-    $\rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3 \rightarrow \text{MAX-POOL}(f=2,s=2)$
-    $\rightarrow \text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3 \rightarrow \text{MAX-POOL}(f=2,s=2) \rightarrow \text{FC} \rightarrow \text{FC} $ 
-    $\rightarrow \text{Softmax}$
+- Image(224, 224, 3) -> $\text{CONV}(\text{"same"},n_c=64,f=3,s=1)*2$ -> $\text{MAX-POOL}(f=2,s=2)$ -> $\text{CONV}(\text{"same"},n_c=128,f=3,s=1)*2$ -> $\text{MAX-POOL}(f=2,s=2)$ -> $\text{CONV}(\text{"same"},n_c=256,f=3,s=1)*3$ -> $\text{MAX-POOL}(f=2,s=2)$ -> $\text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3$ -> $\text{MAX-POOL}(f=2,s=2)$ -> $\text{CONV}(\text{"same"},n_c=512,f=3,s=1)*3$ -> $\text{MAX-POOL}(f=2,s=2)$ -> FC -> FC -> Softmax
 
 ### Vanishing Gradients
 - Very deep networks often have the problem of vanishing gradients
@@ -487,4 +480,8 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - As we going deeper into the U-net, $n_h, n_w$ increses and $n_c$ descrease
 - Transpose convolution: used to increase $n_h, n_w$
     - opposite of normal convolution, it applies the filter on the output 
-    - e.g. input shape (2, 2), f = 3, p = 1, s = 2, 
+    - e.g. input shape (2, 2), f = 3, p = 1, s = 2
+    
+![U-Neet](https://miro.medium.com/max/1400/1*faRskFzI7GtvNCLNeCN8cg.png)
+
+## More
