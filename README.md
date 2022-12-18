@@ -434,13 +434,14 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 
 ### Object Localization
 - Convolutional network with softmax output 
-- Target value example: $y = [P_c, b_x, b_y, b_h, b_w, c_1, ..., c_i]$, where $P_c$ is whether an object is detected, $b_i$ are the parameters of the bounding box, and $c_i$ are the classes of the objects.
-- If $P_c$ = 0, then the rest of value is negligible
+- Target value example: $y = [p_c, b_x, b_y, b_h, b_w, c_1, ..., c_i]$, where $p_c$ is whether an object is detected, $b_i$ are the parameters of the bounding box, and $c_i$ are the classes of the objects. 
+- Top left corner of the image is (0, 0), and bottom right is (1, 1)
+- If $p_c$ = 0, then the rest of value is negligible
 - Loss function: $L(\hat y, y) = (\hat y_1 - y_1)^2 + (\hat y_2 - y_2)^2 + ... + (\hat y_8 - y_8)^2$ if $y_1 = 1, (\hat y_1 - y_1)^2$ if $y_1 = 0$
-- In practice, common to use logistic loss for $P_c$, softmax loss for $c_i$, sqaure error for $b_i$ 
+- In practice, common to use logistic loss for $p_c$, softmax loss for $c_i$, sqaure error for $b_i$ 
     
 ### Landmark Detection
-- Target value example: $y = [P_c, l_{1x}, l_{1y}, ..., l_{ix}, l_{iy}]$, where $P_c$ is whether the object is detected, $l_{ix}, l_{iy}$ are the coordinates of the landmarks you want to recognize
+- Target value example: $y = [p_c, l_{1x}, l_{1y}, ..., l_{ix}, l_{iy}]$, where $p_c$ is whether the object is detected, $l_{ix}, l_{iy}$ are the coordinates of the landmarks you want to recognize
 
 ### Object Detection
 - Sliding window detection
@@ -449,3 +450,32 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
         - trun FC layers into convolutional layers: treat the set of neurons in the first FC layer as a (1, 1, $n^{[l]}$) volume, and then use 1x1 filters to get (1, 1, $n^{[l+i]}$) volumes for the next FC layers 
         - e.g. suppose the ConvNet is trained with input shape (14, 14, 3) and output shape (1, 1, 4), and the test set has input shape (16, 16, 3). Then, if we just run the same ConvNet with the test set, the model will have a output of shape (2, 2, 4) which is consist of 4 (1, 1, 4) volumes that correspond to the results of 4 overlapping windows
         - with convolutional implementation, the algorithm makes all the predictions at the same time by one forward pass through the ConvNet
+
+### Intersection Over Union (IoU)
+- Used to evaluate the performance of an object detection algorithm. 
+- It compares the area of overlap between the predicted bounding box and the ground-truth bounding box with the area of their union (the combined area of both boxes).
+- $\frac{\text{size of the intersection}}{\text{size of the union}}$, "correct" if IoU $\geq$ threshold (0.5 commonly used)
+
+### Non-Max Suppression
+- Used to eliminate all the overlapping bounding boxes that have a high IoU to the bounding box with highest $p_c$ for each object (probability of an object is detected) so that the algorithm detects each object only once 
+    - e.g. discard all bounding boxes with $p_c \geq 0.6$ 
+    - while there are any remaining buonding boxes that haven't been visited:
+        - pick the box with the highest $p_c$, and output that as a prediction 
+        - discard any remaining box with IoU $\geq$ 0.5 with the box output in the previous step
+- If there are k classes, then you should run non-max suppression k times independently for each of the classes
+
+### Anchor Boxes
+- Used for the cases where multiple objects are in the same grid cell
+    - e.g. two anchor boxes
+    - then, $y = [p_c, b_x, b_y, b_h, b_w, c_1, ..., c_i, p_c, b_x, b_y, b_h, b_w, c_1, ..., c_i]$ where the first half of y is the parameters for anchor box 1, and the second half is for anchor box 2
+    - each object in training image is assigned to grid cell that contains object's midpoint and anchor box for the grid cell with highest IoU to the ground truth bounding box. It's assigned as pairs (grid cell number, anchor box number)
+
+### YOLO (You Only Look Once) Algorithm
+- Designed to perform object detection in real-time by processing images in a single pass. 
+- Relatively effcient and accurate (works better than sliding window approach), and it can be used to detect a wide range of objects in an image.
+    - divide the input image into a $n_h$ by $n_w$ grid, and for each grid cell, we have a training label y = mutiple $[p_c, b_x, b_y, b_h, b_w, c_1, ..., c_i]$ concatenate together depends on the number of anchor boxes
+    - for a single pass through the ConvNet, we will get the output of shape $(n_h, n_w, n_p)$ where $n_h$ x $n_w$ is the number of grid cells and $n_p$ is the number of parameters in y
+    - so, for each grid cell, we have a $(1, 1, n_p)$ volumn output that tells us if one or more objects are detected in that cell, and if so, wihch are the objects and what are the bounding box coordinates for the detected objects.
+    - for an object showing up in multiple grid cells, assign it to the grid cell that contains the object's midpoint
+    - Top left corner of each grid cell is (0, 0), and bottom right is (1, 1). $b_x, b_y$ have to be between 0 and 1, and $b_h, b_w$ could be greater than 1.
+    - then get rid of low probability predictions, for each class, and run non-max suppression to generate the final predictions 
