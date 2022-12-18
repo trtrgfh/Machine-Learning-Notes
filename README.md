@@ -479,3 +479,10 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - for an object showing up in multiple grid cells, assign it to the grid cell that contains the object's midpoint
     - Top left corner of each grid cell is (0, 0), and bottom right is (1, 1). $b_x, b_y$ have to be between 0 and 1, and $b_h, b_w$ could be greater than 1.
     - then get rid of low probability predictions, for each class, and run non-max suppression to generate the final predictions 
+
+### Region Proposal: R-CNN
+- Proposes a set of candidate regions in an image that may contain objects, and then classifies the regions to determine if they contain an object and, if so, what type of object it is.
+
+### Semantic Segmentation with U-Net
+- Semantic Segmentation: the task of assigning a semantic label (such as "car," "building," or "road") to each pixel in an image
+- As we going deeper into the U-net, $n_h, n_w$ increses and $n_c$ descrease
