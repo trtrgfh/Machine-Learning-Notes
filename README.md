@@ -476,12 +476,22 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Proposes a set of candidate regions in an image that may contain objects, and then classifies the regions to determine if they contain an object and, if so, what type of object it is.
 
 ### Semantic Segmentation with U-Net
-- Semantic Segmentation: the task of assigning a semantic label (such as "car," "building," or "road") to each pixel in an image
+- U-Net is commonly used fpr semantic segmentation tasks (assigning a semantic label (such as "car," "building," or "road") to each pixel in an image)
 - As we going deeper into the U-net, $n_h, n_w$ increses and $n_c$ descrease
 - Transpose convolution: used to increase $n_h, n_w$
+    - increase the size of the output while preserving the spatial resolution of the input
     - opposite of normal convolution, it applies the filter on the output 
-    - e.g. input shape (2, 2), f = 3, p = 1, s = 2
-    
-![U-Neet](https://miro.medium.com/max/1400/1*faRskFzI7GtvNCLNeCN8cg.png)
+    - e.g. 
 
-## More
+![tanspose-conv](https://miro.medium.com/max/1400/1*faRskFzI7GtvNCLNeCN8cg.png)
+- U-Net intuition: 
+    - the first half of the network will sort of compress the image where the height and width of the layers decrease and depth/channel increases, so a lot of spatial information (data that describes the location, shape, and/or size of objects) which can be used to identify the location and size of objects in an image is lost
+    - the second half of the network uses the transpose convolution to reverse the layers size back up to the size of the original input image because we want a detailed, pixel-level map (i.e. high resolution) of the objects in an image.
+    - also, there are skip connections from the earlier layers to the later layers
+    - the later layers have the high level contextual information (relationships between the various objects in the scene, e.g. a stove is typically used for cooking) which can help the model classify and identify objects in the image more accurately, but missing detailed spatial information because the height and width are just lower
+    - the earlier layers have the high resolution, low level feature information (e.g. simple shapes, edges)
+    - so with the skip connections, the later layers will have both lower resolution, but high level contextual information, as well as the lower level, but more detailed spatial information (can tells you the shape of an object or where the object is located)
+    - in other words, earlier layers give you the high resolution pixel-level map and the shape or location of each object, and then the info from the earlier layers is pass to the later layers through skip connection, so the later layers can use that high resolution map and the high level contextual information from the previous layer to check if each pixel is belong to one of the classes
+    - the ouput of U-Net has shape $(h, w, n_{class})$, so there are h x w pixels and each one of the $(1, 1, n_{class})$ volumn tells you how likely is it for the pixel to be each of the classes in $n_{class}$
+    
+## More to come
