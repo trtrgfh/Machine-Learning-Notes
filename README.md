@@ -486,3 +486,6 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 ### Semantic Segmentation with U-Net
 - Semantic Segmentation: the task of assigning a semantic label (such as "car," "building," or "road") to each pixel in an image
 - As we going deeper into the U-net, $n_h, n_w$ increses and $n_c$ descrease
+- Transpose convolution: used to increase $n_h, n_w$
+    - opposite of normal convolution, it applies the filter on the output 
+    - e.g. input shape (2, 2), f = 3, p = 1, s = 2, 
