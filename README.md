@@ -366,7 +366,7 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 
 ### LeNet-5: 
 - Used to recognize hand-written digits
-- Image -> $\text{CONV}(n_c=6,f=5,s=1)$ -> $\text{AVG-POOL}(f=2,s=2)$ -> $\text{CONV}(n_c=16,f=6,s=1)$ -> $\text{AVG-POOL}(f=2,s=2)$ -> FC -> FC -> $\hat y$
+- Image -> $\text{CONV}(n_c=6,f=5,s=1)$ -> $\text{AVG-POOL}(f=2,s=2)$ -> $\text{CONV}(n_c=16,f=6,s=1)$ -> $\text{AVG-POOL}(f=2,s=2)$ -> FC -> FC -> Softmax
 
 ### AlexNet
 - Image(227, 227, 3) -> $\text{CONV}(n_c=96,f=11,s=4)$ -> $\text{MAX-POOL}(f=3,s=2)$ -> $\text{CONV}(\text{"same"},n_c=256,f=5,s=1)$ -> $\text{MAX-POOL}(f=3,s=2)$ -> $\text{CONV}(\text{"same"},n_c=384,f=3,s=1)$ -> $\text{CONV}(\text{"same"},n_c=384,f=3,s=1)$ -> $\text{CONV}(\text{"same"},n_c=384,f=3,s=1)$ -> $\text{MAX-POOL}(f=3, s=2)$ -> FC -> FC -> Softmax
