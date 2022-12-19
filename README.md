@@ -22,6 +22,8 @@ Field of study that gives conputers the ability to learn without explicit progra
     1. [Foundations of CNN](#fundamentalscnn)
     2. [Deep Convolutional Models](#deepcnnmodel)
     3. [Object Detection](#objectdetect)
+    4. [Face Recognition](#facerecogn)
+    5. [Neural Style Transfer](#neuraltransfer)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -494,12 +496,14 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - in other words, earlier layers give you the high resolution pixel-level map of the shape or location of each object, and then the info from the earlier layers is pass to the later layers through skip connections, so the later layers can use that high resolution map and the high level contextual information from the previous layer to check if each pixel is belong to one of the classes
     - the ouput of U-Net has shape $(h, w, n_{class})$, so there are h x w pixels and each one of the $(1, 1, n_{class})$ volumn tells you how likely is it for the pixel to be each of the classes in $n_{class}$
     
-## Face Recognition <a name="facerecognition"></a>
+## Face Recognition <a name="facerecogn"></a>
 ### One Shot Learning
 - Learning from one example or a small number of examples to recognize the person again
 - Siamese network: used for one-shot learning tasks.
-    - consists of two identical subnetworks, which are trained to process inputs and generate outputs in a similar way.
-    - the subnetworks are typically connected by a distance function, which is used to compare the outputs of the two subnetworks and compute a similarity measure.
+    - two identical subnetworks, which are trained to process inputs and generate outputs in a similar way.
+    - then pass the outputs of the subnetworks to a logistic layer. Given input $x^{(i)}, x^{(j)}$,
+    $$\hat y = \sigma (\sum_{k=1}^n w_k |f(x^{(i)})_k - f(x^{(j)})_k| + b)$$, and there are other ways to compute $|f(x^{(i)})_k - f(x^{(j)})_k|$
+    - if $x^{(i)}$ is a real time image, and $x^{(j)}$ is the image from your database, then you can pre-compute all the images in the database using the subnetwork for $x^{(j)}$. The next time you want to compare two images, you only need to run the subnetwork for $x^{(i)}$
 - Triplet loss: 
     - training data consists of triplets of examples, where each triplet consists of an anchor example, a positive example, and a negative example.
     - for each triplet, measure the distance between the anchor and positive example, and the distance between the anchor and negative example
@@ -507,4 +511,6 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - cost function:
     $$J = \sum_{i=1}^m max(||f(anchor) - f(positive)||_2^2 - ||f(anchor) - f(negative)||_2^2 + \alpha, 0)$$
     - if anchor, positive, negative examples are randomly choosen during training, then $||f(anchor) - f(positive)||_2^2 - ||f(anchor) - f(negative)||_2^2 + \alpha \leq 0$ is easily satisfied, so the network won't learn much from it
-    - choose the triplets where $d(a, p) \approx d(a, n)$
+    - choose the triplets where $d(anchor, positive) \approx d(anchor, negative)$
+
+## Neural Style Transfer <a name="neuraltransfer"></a>
