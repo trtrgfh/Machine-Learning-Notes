@@ -494,4 +494,17 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - in other words, earlier layers give you the high resolution pixel-level map of the shape or location of each object, and then the info from the earlier layers is pass to the later layers through skip connections, so the later layers can use that high resolution map and the high level contextual information from the previous layer to check if each pixel is belong to one of the classes
     - the ouput of U-Net has shape $(h, w, n_{class})$, so there are h x w pixels and each one of the $(1, 1, n_{class})$ volumn tells you how likely is it for the pixel to be each of the classes in $n_{class}$
     
-## More to come
+## Face Recognition <a name="facerecognition"></a>
+### One Shot Learning
+- Learning from one example or a small number of examples to recognize the person again
+- Siamese network: used for one-shot learning tasks.
+    - consists of two identical subnetworks, which are trained to process inputs and generate outputs in a similar way.
+    - the subnetworks are typically connected by a distance function, which is used to compare the outputs of the two subnetworks and compute a similarity measure.
+- Triplet loss: 
+    - training data consists of triplets of examples, where each triplet consists of an anchor example, a positive example, and a negative example.
+    - for each triplet, measure the distance between the anchor and positive example, and the distance between the anchor and negative example
+    - since the anchor and positive image are from the same person, given f is the ouput of the network, $||f(anchor) - f(positive)||_2^2$ should be small and $||f(anchor) - f(negative)||_2^2$ should be large vice versa.
+    - so we want $||f(anchor) - f(positive)||_2^2 - ||f(anchor) - f(negative)||_2^2 + \alpha \leq 0$ where $\alpha$ is a hyperparameter added to avoid the trivial solutions where f just set everything to 0 or set everything to be equal to each other 
+    - cost function:
+    $$J = \sum_{i=1}^m max(||f(anchor) - f(positive)||_2^2 - ||f(anchor) - f(negative)||_2^2 + \alpha, 0)$$
+    
