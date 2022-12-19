@@ -514,3 +514,14 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
     - choose the triplets where $d(anchor, positive) \approx d(anchor, negative)$
 
 ## Neural Style Transfer <a name="neuraltransfer"></a>
+- Neural style transfer allows you to apply the style of one image to the content of another image
+- In deep ConvNets, 
+- Given content image C, style image S, and generated image G
+- The cost function for the neural style transfer is:
+$$J(G) = \alpha J_{Content}(C, G) + \beta J_{Style}(S, G)$$
+    - $\alpha, \beta$ are hyperparameters
+    - $J_{Content}(C, G) = ||a^{[l]\(C)} - a^{[l]\(G)}||_2^2$, which measures how similar is the content of C to the content of G 
+        - use 
+
+- Initialize G randomly
+- Use gradient descent to minimize J(G), G = G - $\frac{\partial}{\partial G} J(G)$
