@@ -503,8 +503,7 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 - Triplet loss: 
     - training data consists of triplets of examples, where each triplet consists of an anchor example, a positive example, and a negative example.
     - for each triplet, measure the distance between the anchor and positive example, and the distance between the anchor and negative example
-    - since the anchor and positive image are from the same person, given f is the ouput of the network, $||f(anchor) - f(positive)||_2^2$ should be small and $||f(anchor) - f(negative)||_2^2$ should be large vice versa.
-    - so we want $||f(anchor) - f(positive)||_2^2 - ||f(anchor) - f(negative)||_2^2 + \alpha \leq 0$ where $\alpha$ is a hyperparameter added to avoid the trivial solutions where f just set everything to 0 or set everything to be equal to each other 
+    - since the anchor and positive image are from the same person, given f is the ouput of the network, we want $||f(anchor) - f(positive)||_2^2 - ||f(anchor) - f(negative)||_2^2 + \alpha \leq 0$ where $\alpha$ is a hyperparameter added to avoid the trivial solutions where f just set everything to 0 or set everything to be equal to each other 
     - cost function:
     $$J = \sum_{i=1}^m max(||f(anchor) - f(positive)||_2^2 - ||f(anchor) - f(negative)||_2^2 + \alpha, 0)$$
-    
+    - if anchor, positive, negative examples are randomly choosen during training, then the network won't learn much from it
