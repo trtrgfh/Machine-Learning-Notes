@@ -515,13 +515,24 @@ $$J = -\frac{1}{m} \sum_{i=1}^m \sum_{j=1}^K y_j^{(i)}log\ \hat y_j^{(i)}$$ wher
 
 ## Neural Style Transfer <a name="neuraltransfer"></a>
 - Neural style transfer allows you to apply the style of one image to the content of another image
-- In deep ConvNets, 
 - Given content image C, style image S, and generated image G
 - The cost function for the neural style transfer is:
 $$J(G) = \alpha J_{Content}(C, G) + \beta J_{Style}(S, G)$$
     - $\alpha, \beta$ are hyperparameters
-    - $J_{Content}(C, G) = ||a^{[l]\(C)} - a^{[l]\(G)}||_2^2$, which measures how similar is the content of C to the content of G 
-        - use 
-
+    - measure content of an image: choose a middle layer to measure how different is the content of C to the content of G
+        - lower layers capture low-level features such as edges and shapes, and it may not accurately reflect the overall content of the image
+        - in higher layers, the content cost may be overly sensitive to specific details and may not generalize well to different images.
+    - use a pre-trained ConvNet (e.g. VGG)
+    - if $a^{[l]\(C)}$ and $a^{[l]\(G)}$ are similar, then both images have similar content
+    - content cost function:
+    - $$J_{Content}(C, G) = ||a^{[l]\(C)} - a^{[l]\(G)}||_2^2$$
+    - measure style of an image: choose some earlier and later layers l to measure how correlated are the activations across different channels 
+        - take both low level and high level features correlations into account when computing style
+    - style/gram matrix: 
+        - $$G_{kk^{'}}^{[l]\(S)} = \sum_{i=1}^{n_h} \sum_{j=1}^{n_w} a_{ijk}^{[l]\(S)} a_{ijk^{'}}^{[l]\(S)}$$
+        - $$G_{kk^{'}}^{[l]\(G)} = \sum_{i=1}^{n_h} \sum_{j=1}^{n_w} a_{ijk}^{[l]\(G)} a_{ijk^{'}}^{[l]\(G)}$$
+    - style cost function
+    - $$J_{Style}^{[l]}(S, G) = \frac{1}{(n_h^{[l]}, n_w^{[l]}, n_c^{[l]})^2} \sum_{k=1}^{n_c^{[l]}} \sum_{k^{'}=1}^{n_c^{[l]}} (G_{kk^{'}}^{[l]\(S)} - G_{kk^{'}}^{[l]\(G)})^2$$
+    - $$J_{Style}(S, G) = \sum_{l}^{n_l} \lambda ^{[l]} J_{Style}^{[l]}(S, G)$$
 - Initialize G randomly
 - Use gradient descent to minimize J(G), G = G - $\frac{\partial}{\partial G} J(G)$
