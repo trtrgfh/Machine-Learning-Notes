@@ -24,6 +24,7 @@ Field of study that gives conputers the ability to learn without explicit progra
     3. [Object Detection](#objectdetect)
     4. [Face Recognition](#facerecogn)
     5. [Neural Style Transfer](#neuraltransfer)
+5. [Sequence Models](#sequence)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -536,3 +537,5 @@ $$J(G) = \alpha J_{Content}(C, G) + \beta J_{Style}(S, G)$$
     - style cost function
     - $$J_{Style}^{[l]}(S, G) = \frac{1}{(n_h^{[l]}, n_w^{[l]}, n_c^{[l]})^2} \sum_{k=1}^{n_c^{[l]}} \sum_{k^{'}=1}^{n_c^{[l]}} (G_{kk^{'}}^{[l]\(S)} - G_{kk^{'}}^{[l]\(G)})^2$$
     - $$J_{Style}(S, G) = \sum_{l}^{n_l} \lambda ^{[l]} J_{Style}^{[l]}(S, G)$$
+
+# Sequence Models <a name="sequence"></a> 
