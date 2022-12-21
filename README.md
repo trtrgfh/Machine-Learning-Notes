@@ -25,6 +25,7 @@ Field of study that gives conputers the ability to learn without explicit progra
     4. [Face Recognition](#facerecogn)
     5. [Neural Style Transfer](#neuraltransfer)
 5. [Sequence Models](#sequence)
+    1. [Recurrent Neural Networks](#rnn)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -539,3 +540,39 @@ $$J(G) = \alpha J_{Content}(C, G) + \beta J_{Style}(S, G)$$
     - $$J_{Style}(S, G) = \sum_{l}^{n_l} \lambda ^{[l]} J_{Style}^{[l]}(S, G)$$
 
 # Sequence Models <a name="sequence"></a> 
+Designed to process sequential data, e.g. speech recognition, sentiment classification, DNA sequence analysis
+
+## Recurrent Neural Networks <a name="rnn"></a> 
+- The standard networks don't work well for sequential data because
+    - inputs, outputs can be different length in different examples
+    - doesn't share features learned across different position of text
+    - computational expensive because of the number of parameters
+
+### Unidirectional Recurrent Neural Networks
+- RNNs have an internal memory that allows them to remember past information and use it to make decisions about the present or future. 
+- One downside is that the network only uses the earlier information to make predictions, and it causes the problem that sometimes you can't fully understand a sentence by hearing only the first half of the sentence.
+- Tanh activation is commonly used in RNN
+- RNN types:
+    - one to one: standard neural network where input and output sequences both have a single time step, e.g. image classification.
+    - one to many: a single time step of input and multiple time steps of output, e.g. music generation
+    - many to one: input sequence has multiple time steps, but the output has a single time step, e.g. sentiment analysis
+    - many to many: both the input and output sequences have multiple time steps, e.g. if $T_x = T_y$, name entity recognition. if $T_x != T_y$, machine translation 
+
+### Language Model with RNN
+- Designed to predict the likelihood of a sequence of words
+- Trained on large datasets of text (corpus) and learn to predict the probability of each word in the sequence given the words that come before it. 
+- Turn the training set into one hot vector
+- You can add extra <EOS> at the end of each sentence and words not in the corpus can be replace by a token <UNK> (unknown)
+- Cost function:
+- After the sequence model is trained, one way to get a sense of what the model has learned is to have a sample novel sequence
+    - use np.random.choice to sample the first word from the probability distribution vector of words
+    - pass the $\hat y^{<1>}$ to the next time step, and sample a second word and compute the probability of the second word in the sequence given the first word
+    - repeat the process until reach a word count or <EOS>
+- Character-level language model
+    - handle spelling errors and out-of-vocabulary words more easily
+    - more robust to variations in language
+    - computational expensive
+- Vanishing gradient
+    - difficult for the network to memorize a word in a earlier layer to make changes (singular or plural) to a word in a later layer
+- Exploding gradient
+    - eaiser to solve, e.g. gradient clipping: if gradient is greater than some threshold, then rescale some of the gradient vectors
