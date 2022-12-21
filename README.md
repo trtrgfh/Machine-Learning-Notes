@@ -576,3 +576,6 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - difficult for the network to memorize a word in a earlier layer to make changes (singular or plural) to a word in a later layer
 - Exploding gradient
     - eaiser to solve, e.g. gradient clipping: if gradient is greater than some threshold, then rescale some of the gradient vectors
+
+### Gated Recurrent Unit (GRU)
+### Long Short Term Memory (LSTM)
