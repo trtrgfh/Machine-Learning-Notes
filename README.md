@@ -584,9 +584,10 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - the reset gate controls the amount of information from the previous time step that is passed on to the current time step, 
     - the update gate controls the amount of information from the current input that is combined with the previous state. 
     - This allows the GRU to adaptively "forget" or "remember" information as needed.
-- $\widetilde{c}^{\langle t \rangle} = tanh(W_c[\Gamma_r * c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_c)$
-- $\Gamma_u = \sigma (W_u[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_u)$
-- $\Gamma_r = \sigma (W_r[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_r)$
-- $c^{\langle t \rangle} = \Gamma_u \widetilde{c}^{\langle t \rangle} + (1 - \Gamma_u) + \widetilde{c}^{\langle t-1 \rangle}$
+- given memory cell c (allows the network to remember and retain information from the past in order to make predictions or decisions based on that information), and $c^{\langle t \rangle} = a^{\langle t \rangle}$ in GRU
+- $\widetilde{c}^{\langle t \rangle} = tanh(W_c[\Gamma_r * c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_c)$ (candidate for replacing $c^{\langle t \rangle}$)
+- $\Gamma_u = \sigma (W_u[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_u)$ (update gate, most cases value very close to 0 and 1 which indicates whether or not to update the value of $c^{\langle t \rangle}$)
+- $\Gamma_r = \sigma (W_r[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_r)$ (reset gate, indicates how relevant is $c^{\langle t-1 \rangle}$ to c^{\langle t \rangle})
+- $c^{\langle t \rangle} = \Gamma_u \widetilde{c}^{\langle t \rangle} + (1 - \Gamma_u) * c^{\langle t-1 \rangle}$ (value of memory cell at time step t)
 
 ### Long Short Term Memory (LSTM)
