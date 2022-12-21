@@ -586,8 +586,18 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - This allows the GRU to adaptively "forget" or "remember" information as needed.
 - given memory cell c (allows the network to remember and retain information from the past in order to make predictions or decisions based on that information), and $c^{\langle t \rangle} = a^{\langle t \rangle}$ in GRU
 - $\widetilde{c}^{\langle t \rangle} = tanh(W_c[\Gamma_r * c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_c)$ (candidate for replacing $c^{\langle t \rangle}$)
-- $\Gamma_u = \sigma (W_u[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_u)$ (update gate, most cases value very close to 0 and 1 which indicates whether or not to update the value of $c^{\langle t \rangle}$)
-- $\Gamma_r = \sigma (W_r[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_r)$ (reset gate, indicates how relevant is $c^{\langle t-1 \rangle}$ to c^{\langle t \rangle})
+- $\Gamma_u = \sigma (W_u[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_u)$ (update gate, most cases value very close to 0 and 1 which indicates whether or not to update $c^{\langle t \rangle}$)
+- $\Gamma_r = \sigma (W_r[c^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_r)$ (reset gate, indicates how relevant is $c^{\langle t-1 \rangle}$ to $c^{\langle t \rangle}$)
 - $c^{\langle t \rangle} = \Gamma_u \widetilde{c}^{\langle t \rangle} + (1 - \Gamma_u) * c^{\langle t-1 \rangle}$ (value of memory cell at time step t)
 
 ### Long Short Term Memory (LSTM)
+- designed to capture long-term dependencies in sequential data.
+- more powerful than GRU because they have more components that allow them to capture long-term dependencies in sequential data.
+- three gates: input, output, and forget gates
+    - control the flow of information into and out of the "memory cell," which can store information for long periods of time. The gates are implemented using neural networks, and they allow the LSTM to selectively "remember" or "forget" information as needed.
+- $c^{\langle t \rangle} \neq a^{\langle t \rangle}$ in GRU
+- $\widetilde{c}^{\langle t \rangle} = tanh(W_c[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_c)$ 
+- $\Gamma_u = \sigma (W_u[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_u)$ 
+- $\Gamma_f = \sigma (W_f[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_f)$ 
+- $\Gamma_o = \sigma (W_o[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_o)$ 
+- $c^{\langle t \rangle} = \Gamma_u \widetilde{c}^{\langle t \rangle} + \Gamma_f * c^{\langle t-1 \rangle}$
