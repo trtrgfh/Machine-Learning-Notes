@@ -578,4 +578,15 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - eaiser to solve, e.g. gradient clipping: if gradient is greater than some threshold, then rescale some of the gradient vectors
 
 ### Gated Recurrent Unit (GRU)
+- designed to capture long-term dependencies in sequential data.
+- more computationally efficient and easier to train than LSTMs
+- A GRU cell consists of two gates: a reset gate and an update gate. 
+    - the reset gate controls the amount of information from the previous time step that is passed on to the current time step, 
+    - the update gate controls the amount of information from the current input that is combined with the previous state. 
+    - This allows the GRU to adaptively "forget" or "remember" information as needed.
+- $\widetilde{c}^{\langle t \rangle} = tanh(W_c[\Gamma_r * c^{\langle t-1 \rangle}, x^{<t>}] + b_c)$
+- $\Gamma_u = \sigma (W_u[c^{\langle t-1 \rangle}, x^{<t>}] + b_u)$
+- $\Gamma_r = \sigma (W_u[c^{\langle t-1 \rangle}, x^{<t>}] + b_r)$
+- $c^{\langle t \rangle} = \Gamma_u \widetilde{c}^{\langle t \rangle} + (1 - \Gamma_u) + \widetilde{c}^{\langle t-1 \rangle}$
+
 ### Long Short Term Memory (LSTM)
