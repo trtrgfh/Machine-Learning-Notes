@@ -595,9 +595,20 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 - more powerful than GRU because they have more components that allow them to capture long-term dependencies in sequential data.
 - three gates: input, output, and forget gates
     - control the flow of information into and out of the "memory cell," which can store information for long periods of time. The gates are implemented using neural networks, and they allow the LSTM to selectively "remember" or "forget" information as needed.
-- $c^{\langle t \rangle} \neq a^{\langle t \rangle}$ in GRU
+- $c^{\langle t \rangle} \neq a^{\langle t \rangle}$ in LSTM
 - $\widetilde{c}^{\langle t \rangle} = tanh(W_c[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_c)$ 
 - $\Gamma_u = \sigma (W_u[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_u)$ 
 - $\Gamma_f = \sigma (W_f[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_f)$ 
 - $\Gamma_o = \sigma (W_o[a^{\langle t-1 \rangle}, x^{\langle t \rangle}] + b_o)$ 
 - $c^{\langle t \rangle} = \Gamma_u \widetilde{c}^{\langle t \rangle} + \Gamma_f * c^{\langle t-1 \rangle}$
+- $a^{\langle t \rangle} = \Gamma_o * tanh(c^{\langle t \rangle})$
+
+### Bidirectional RNN
+- Processes input sequences in both forward and backward directions. 
+- Allows the model to capture contextual information from both past and future input in the sequence.
+- Two separate RNNs 
+    - one processing the input sequence in the forward direction and the other processing the sequence in the backward direction. 
+    - the output of each RNN is then concatenated, and the resulting sequence is fed into a fully connected layer to produce the final output.
+
+### Deep RNN
+- stack multiple layers of recurrent cells on top of each other, with each layer processing the output of the previous layer. The input to the first layer is the raw input sequence, and the output of the final layer is used to make predictions or classifications.
