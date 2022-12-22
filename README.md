@@ -644,6 +644,6 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - instead of a large m way softmax, we have m binary classification problems, and at every iteration, we only need to train k + 1 of them
     - to randomly choose the negative target words, use the distribution $p(w_i) = \frac{f(w_i)^{\frac{3}{4}}}{\sum_{j=1}^m f(w_j)^{\frac{3}{4}}}$, where $f(w_i)$ is the frequency of word i
 - Glove (global vectors for word representation) algorithm
-    - $X_{ij} = #$times j(t) appears in content of i(c), $X_{ij} = X_{ji}$
+    - $X_{ij}$ = #times j(t) appears in content of i(c), $X_{ij} = X_{ji}$
     - minimize $\sum_{i=1}^m \sum_{j=1}^m f(X_{ij})(\theta_i^T e_j + b_i + b_j^{\'}- logX_{ij})^2$, 
     - where $f(X_{ij})$ is a weighting factor and $f(X_{ij})=0$ if $X_{ij} = 0$
