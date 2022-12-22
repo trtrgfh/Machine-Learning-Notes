@@ -26,6 +26,8 @@ Field of study that gives conputers the ability to learn without explicit progra
     5. [Neural Style Transfer](#neuraltransfer)
 5. [Sequence Models](#sequence)
     1. [Recurrent Neural Networks](#rnn)
+    2. [Natural Language Processing & Word Embeddings](#nlpandwordembedding)
+
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -612,3 +614,8 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 
 ### Deep RNN
 - stack multiple layers of recurrent cells on top of each other, with each layer processing the output of the previous layer. The input to the first layer is the raw input sequence, and the output of the final layer is used to make predictions or classifications.
+
+## Natural Language Processing & Word Embeddings <a name="nlpandwordembedding"></a>
+
+### Word Embeddings 
+- 
