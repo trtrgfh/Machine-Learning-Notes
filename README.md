@@ -618,4 +618,32 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ## Natural Language Processing & Word Embeddings <a name="nlpandwordembedding"></a>
 
 ### Word Embeddings 
-- 
+- A way of representing words in a continuous (numeric) vector space (each word has a vector of features, e.g. gender, food), so that words that are semantically similar are close together in the vector space. 
+- Allowing models to understand the meanings of words in a given context and make better predictions.
+- T-SNE can be used to visulize the data and words with similar feature will be shown close to each other
+- Transfer learning and word embeddings
+    - Learn word embeddings from large text corpus (1-100B words) or download pre-trained embedding online
+    - Transfer embedding to new task with smaller training set
+    - Continue to finetune the word embeddings with new data (if large new dataset)
+- Find word w, e.g. $arg max_w sim(e_w, e_king - e_{man} + e_{woman})$
+- Cosine similarity: sim(u, v) = $\frac{u^Tv}{||u||_2||v||_2}$
+
+### Word2vec & Glove
+- Word2vec is a method for training a neural network to produce word embeddings
+- skip-grams model: randomly choose a content word and within a small window of words surrounding the content word, randomly choose a target word
+    - don't just sample uniformly at random for content c (some words may show up frequently)
+    - training examples are content c -> target t (x -> y)
+    - $O_c$ -> E -> $e_c$ -> O -> $\hat y$, where $O_c, e_c$ are the one-hot vector and the embedding vector for the content word, E is the embedding matrix, and O is the softmax layer.
+    - softmax: $p(t|c) = \frac{e^{\theta_t^T e_c}}{\sum_{j=1}^m e^{\theta_t^T e_c}}$, where $\theta_t$ = parameters associated with output t
+    - $L(\hat y, y) = -\sum_{i=1}^m y_i log \hat y_i$, where y is a one-hot vector
+    - if could be computational expensive to sum over a large number of m words everytime. (hierarchical softmax may help)
+- Negative sampling
+    - pick a positive example of context and target word, and then randomly pick k other target words from the corpus that does not go with the content word 
+    - k = 5-20 for small dataset, 2-5 for large dataset
+    - $p(y=1|c, t) = \sigma (\theta_t^T e_c)$
+    - instead of a large m way softmax, we have m binary classification problems, and at every iteration, we only need to train k + 1 of them
+    - to randomly choose the negative target words, use the distribution $p(w_i) = \frac{f(w_i)^{\frac{3}{4}}}{\sum_{j=1}^m f(w_j)^{\frac{3}{4}}}$, where $f(w_i)$ is the frequency of word i
+- Glove (global vectors for word representation) algorithm
+    - $X_{ij} = #$times j(t) appears in content of i(c), $X_{ij} = X_{ji}$
+    - minimize $\sum_{i=1}^m \sum_{j=1}^m f(X_{ij})(\theta_i^T e_j + b_i + b_j^{\'}- logX_{ij})^2$, 
+    - where $f(X_{ij})$ is a weighting factor and $f(X_{ij})=0$ if $X_{ij} = 0$
