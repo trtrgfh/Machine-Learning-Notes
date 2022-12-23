@@ -689,3 +689,9 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Bleu (Bilingual Evaluation Understudy) Score
 - A metric used to evaluate the quality of machine translation                                      
                                      
+### Attention Model
+- For the encoder decoder architecture (many to many RNN), the Bleu score will start to decrease as the sentence length goes over some thresholds  
+- Attention model is useful when dealing with long sequences of data. It allows a model to focus on specific parts of an input while processing it, i.e. instead of remembering a long sentence and translate the whole sentence all at once, it translates the sentence part by parts.
+- Attention Model has attention weights which indicate how much attention should each output word pays to each word in the original text
+- $\alpha^{\langle t,t^{\'} \rangle} =$ amount of attention $y^{\langle t \rangle}$ should pay to $a^{\langle t^{\'} \rangle}$
+                                 
