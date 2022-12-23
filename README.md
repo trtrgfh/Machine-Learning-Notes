@@ -701,3 +701,4 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Trigger Word Detection
 
 ## Transformer Networks <a name="transformer"></a> 
+- x
