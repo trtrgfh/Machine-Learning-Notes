@@ -661,6 +661,6 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Sequence to Sequence Models
 - Beam search algorithm: used in natural language processing and machine translation to find the most likely sequence of words or phrases given a sequence of words or phrases as input. 
     - set a beam width B 
-    - find top B possible ouput words from the output vocabulary, i.e. find top B words $y^{\langle 1 \rangle}$ that gives the highest $P(y^{\langle 1 \rangle}|x)$)
-    - find top B words $y^{\langle 2 \rangle}$ bsaed on the value of $P(y^{\langle 1 \rangle}, y^{\langle 2 \rangle}|x) = P(y^{\langle 1 \rangle}|x)P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$)
+    - find top B possible ouput words from the output vocabulary, i.e. find top B words $y^{\langle 1 \rangle}$ that gives the highest $P(y^{\langle 1 \rangle}|x)$
+    - find top B words $y^{\langle 2 \rangle}$ bsaed on the value of $P(y^{\langle 1 \rangle}, y^{\langle 2 \rangle}|x) = P(y^{\langle 1 \rangle}|x)P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$, where $P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$ is just the value of the second output unit of the many to many RNN model
     - repeat the steps until reaches <EOS> token or sentence length
