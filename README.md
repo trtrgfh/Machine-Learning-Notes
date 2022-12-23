@@ -27,6 +27,7 @@ Field of study that gives conputers the ability to learn without explicit progra
 5. [Sequence Models](#sequence)
     1. [Recurrent Neural Networks](#rnn)
     2. [Natural Language Processing & Word Embeddings](#nlpandwordembedding)
+    3. [Sequence Models & Attention Mechanism](#seqmodelattmec)
 
 
 # Supervised Learning <a name="supervisedlearning"></a>
@@ -648,11 +649,18 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - minimize $\sum_{i=1}^m \sum_{j=1}^m f(X_{ij})(\theta_i^T e_j + b_i + b_j^{\'}- logX_{ij})^2$, 
     - where $f(X_{ij})$ is a weighting factor and $f(X_{ij})=0$ if $X_{ij} = 0$
 
-## Applications <a name="appwordemb"></a> 
-### Sentiment Classification
-- Used to identify the sentiment of a text such as positive, negative, or neutral.
-- The dataset may be small
-- Feed the embedding vectors to an many to one rnn 
+### Applications <a name="appwordemb"></a> 
+- Sentiment Classification
+    - Used to identify the sentiment of a text such as positive, negative, or neutral.
+    - The dataset may be small
+    - Feed the embedding vectors to an many to one rnn 
+- Debiasing Embedding
+    - Process of removing or reducing biases present in a set of word embeddings.
 
-### Debiasing Embedding
-- Process of removing or reducing biases present in a set of word embeddings.
+## Sequence Models & Attention Mechanism <a name="seqmodelattmec"></a> 
+### Sequence to Sequence Models
+- Beam search algorithm: used in natural language processing and machine translation to find the most likely sequence of words or phrases given a sequence of words or phrases as input. 
+    - set a beam width B 
+    - find top B possible ouput words from the output vocabulary, i.e. find top B words $y^{\langle 1 \rangle}$ that gives the highest $P(y^{\langle 1 \rangle}|x)$)
+    - find top B words $y^{\langle 2 \rangle}$ bsaed on the value of $P(y^{\langle 1 \rangle}, y^{\langle 2 \rangle}|x) = P(y^{\langle 1 \rangle}|x)P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$)
+    - repeat the steps until reaches <EOS> token or sentence length
