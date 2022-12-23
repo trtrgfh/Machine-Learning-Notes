@@ -631,7 +631,7 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 
 ### Word2vec & Glove
 - Word2vec is a method for training a neural network to produce word embeddings
-- skip-grams model: randomly choose a content word and within a small window of words surrounding the content word, randomly choose a target word
+- Skip-grams model: randomly choose a content word and within a small window of words surrounding the content word, randomly choose a target word
     - don't just sample uniformly at random for content c (some words may show up frequently)
     - training examples are content c -> target t (x -> y)
     - $O_c$ -> E -> $e_c$ -> O -> $\hat y$, where $O_c, e_c$ are the one-hot vector and the embedding vector for the content word, E is the embedding matrix, and O is the softmax layer.
@@ -659,18 +659,18 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 
 ## Sequence Models & Attention Mechanism <a name="seqmodelattmec"></a> 
 ### Beam search algorithm
-- used in natural language processing and machine translation to find the most likely sequence of words or phrases given a sequence of words or phrases as input. 
-- set a beam width B 
-- find top B possible ouput words from the output vocabulary, i.e. find top B words $y^{\langle 1 \rangle}$ that gives the highest $P(y^{\langle 1 \rangle}|x)$
-- find top B words $y^{\langle 2 \rangle}$ bsaed on the value of $P(y^{\langle 1 \rangle}, y^{\langle 2 \rangle}|x) = P(y^{\langle 1 \rangle}|x)P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$, where $P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$ is just the value of the second output unit of the many to many RNN model
-- repeat the steps until reaches <EOS> token or sentence length
+- Used in natural language processing and machine translation to find the most likely sequence of words or phrases given a sequence of words or phrases as input. 
+- Set a beam width B 
+- Find top B possible ouput words from the output vocabulary, i.e. find top B words $y^{\langle 1 \rangle}$ that gives the highest $P(y^{\langle 1 \rangle}|x)$
+- Find top B words $y^{\langle 2 \rangle}$ bsaed on the value of $P(y^{\langle 1 \rangle}, y^{\langle 2 \rangle}|x) = P(y^{\langle 1 \rangle}|x)P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$, where $P(y^{\langle 2 \rangle}|x, y^{\langle 1 \rangle})$ is just the value of the second output unit of the many to many RNN model
+- Repeat the steps until reaches <EOS> token or sentence length
 - Length Normalization
     - in beam search, we want to maximize the probablity of the output sequence which is 
     - $$arg max_y \Pi_{t=1}^{T_y} P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(might be too small for the computer to store accurately)}$$
-    - $$arg max_y \sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(less prone to numerical rounding errors}$$
-    - $$arg max_y \sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(less prone to numerical rounding errors}$$
+    - $$arg max_y \sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(less prone to numerical rounding errors)}$$
+    - $$arg max_y \sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(less prone to numerical rounding errors)}$$
     - the above two functions still might suffer from the problem of resulting in shorter sentences in order to maximize the probability
-    - $$arg max_y \frac{1}{T_y^{\alpha}}\sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(better}$$
+    - $$arg max_y \frac{1}{T_y^{\alpha}}\sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(better)}$$
     - run beam search with sentence length $T_y = 1, ..., n$, and get the top results for each sentence length
     - find the highest value on the above normalized log likelihood objective 
 - Choices of B
@@ -679,13 +679,13 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 - Beam search is faster than BFS and DFS, but it does not guarantee to find exact maximum for $arg max_y P(y|x)$
     
 ### Error Analysis in Beam Search 
-    - find the mistakes the algorithm made in dev set, denoted $\hat y$, and denote the correct or better translation as $y^{*}$
-    - use RNN to compute $P(\hat y|x)$ and $P(y^{*}|x)$
-    - if $P(\hat y|x)$ < $P(y^{*}|x)$, then error in beam search. The max P(y|x) beam search chose is $P(\hat y|x)$ instead of $P(y^{*}|x)$
-    - if $P(\hat y|x) \geq P(y^{*}|x)$, then error in RNN. $y^{*}$ should be the correct translation, but RNN predicted $\hat y$ to be the translation
-    - figure out what fraction of erorrs are due to beam search vs RNN. 
-        - More beam search errors, then maybe increase beam width
-        - More RNN errors, then more regularization, more training data or try a different network architecture   
+- Find the mistakes the algorithm made in dev set, denoted $\hat y$, and denote the correct or better translation as $y^{*}$
+- Use RNN to compute $P(\hat y|x)$ and $P(y^{*}|x)$
+- If $P(\hat y|x) < P(y^{*}|x)$, then error in beam search. The max P(y|x) beam search chose is $P(\hat y|x)$ instead of $P(y^{*}|x)$
+- If $P(\hat y|x) \geq P(y^{*}|x)$, then error in RNN. $y^{*}$ should be the correct translation, but RNN predicted $\hat y$ to be the translation
+- Figure out what fraction of erorrs are due to beam search vs RNN. 
+    - More beam search errors, then maybe increase beam width
+    - More RNN errors, then more regularization, more training data or try a different network architecture   
                                       
 ### Bleu (Bilingual Evaluation Understudy) Score
 - A metric used to evaluate the quality of machine translation                                      
