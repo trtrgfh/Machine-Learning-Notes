@@ -28,7 +28,7 @@ Field of study that gives conputers the ability to learn without explicit progra
     1. [Recurrent Neural Networks](#rnn)
     2. [Natural Language Processing & Word Embeddings](#nlpandwordembedding)
     3. [Sequence Models & Attention Mechanism](#seqmodelattmec)
-    4. [Transformer](#transformer)
+    4. [Transformer Networks](#transformer)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -700,4 +700,4 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Speech Recognition
 ### Trigger Word Detection
 
-## Transformer <a name="transformer"></a> 
+## Transformer Networks <a name="transformer"></a> 
