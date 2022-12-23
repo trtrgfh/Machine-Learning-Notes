@@ -668,7 +668,6 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - in beam search, we want to maximize the probablity of the output sequence which is 
     - $$arg max_y \Pi_{t=1}^{T_y} P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(might be too small for the computer to store accurately)}$$
     - $$arg max_y \sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(less prone to numerical rounding errors)}$$
-    - $$arg max_y \sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(less prone to numerical rounding errors)}$$
     - the above two functions still might suffer from the problem of resulting in shorter sentences in order to maximize the probability
     - $$arg max_y \frac{1}{T_y^{\alpha}}\sum_{t=1}^{T_y} log P(y^{\langle t \rangle}|x, y^{\langle 1 \rangle}, ..., y^{\langle t-1 \rangle}), \text{(better)}$$
     - run beam search with sentence length $T_y = 1, ..., n$, and get the top results for each sentence length
@@ -681,8 +680,8 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Error Analysis in Beam Search 
 - Find the mistakes the algorithm made in dev set, denoted $\hat y$, and denote the correct or better translation as $y^{*}$
 - Use RNN to compute $P(\hat y|x)$ and $P(y^{*}|x)$
-- If $P(\hat y|x) < P(y^{*}|x)$, then error in beam search. The max P(y|x) beam search chose is $P(\hat y|x)$ instead of $P(y^{*}|x)$
-- If $P(\hat y|x) \geq P(y^{*}|x)$, then error in RNN. $y^{*}$ should be the correct translation, but RNN predicted $\hat y$ to be the translation
+- If $P(\hat y|x) < P(y^{\*}|x)$, then error in beam search. The max P(y|x) beam search chose is $P(\hat y|x)$ instead of $P(y^{*}|x)$
+- If $P(\hat y|x) \geq P(y^{\*}|x)$, then error in RNN. $y^{\*}$ should be the correct translation, but RNN predicted $\hat y$ to be the translation
 - Figure out what fraction of erorrs are due to beam search vs RNN. 
     - More beam search errors, then maybe increase beam width
     - More RNN errors, then more regularization, more training data or try a different network architecture   
