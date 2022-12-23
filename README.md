@@ -28,7 +28,7 @@ Field of study that gives conputers the ability to learn without explicit progra
     1. [Recurrent Neural Networks](#rnn)
     2. [Natural Language Processing & Word Embeddings](#nlpandwordembedding)
     3. [Sequence Models & Attention Mechanism](#seqmodelattmec)
-    4. [Transformer Networks](#transformer)
+    4. [Transformer Network](#transformer)
 
 # Supervised Learning <a name="supervisedlearning"></a>
 - Supervised learning is when a model is trained on a labeled dataset (dataset contains examples of inputs and their corresponding correct outputs), and the goal is to learn a mapping function from the input to the output. 
@@ -700,5 +700,9 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Speech Recognition
 ### Trigger Word Detection
 
-## Transformer Networks <a name="transformer"></a> 
-- x
+## Transformer Network <a name="transformer"></a> 
+- In RNN, GRU, and LSTM, the models take the input sentence one word at a time, and to compute an output unit, the models have to compute all units that come before.
+- Transformer network allows you to run a lot more of these computations for an entire sequence in parallel, and ingest an entire sentence all at the same time, rather than just processing it one word at a time from left to right. 
+- Combining the use of attention based representations and a CNN convolutional neural network style of processing
+- Take input a lot of pixels, or a lot of words and can compute representations for them in parallel. 
+- A way of computing very rich, very useful representations of words. But with something more akin to this CNN style of parallel processing. 
