@@ -716,9 +716,18 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
         - it looks at all the other words and helps to figure out what's the answer to the question
     - value is the importance of each position in the input
         - it helps to compute how key should be represented within the query
-    - $q^{\langle t \rangle} = W^qx^{\langle t \rangle},\  k^{\langle t \rangle} = W^kx^{\langle t \rangle},\  v^{\langle t \rangle} = W^vx^{\langle t \rangle}$
+    - $q^{\langle t \rangle} = W^Qx^{\langle t \rangle},\  k^{\langle t \rangle} = W^Kx^{\langle t \rangle},\  v^{\langle t \rangle} = W^Vx^{\langle t \rangle}$
 - $$Attention(Q, k, V) = Softmax(\frac{QK^T}{\sqrt{d_k}})V \text{ (vectorized representation of the following equation)}$$
 - $$\text{for each q, }A(q, K, V)= \sum_{i} \frac{exp(qk^{\langle i \rangle})}{\sum_{j} exp(qk^{\langle j \rangle})}v^{\langle i \rangle}$$
 
 ### Mutil-Head Attention
-- 
+- Each time you calculate self-attention for a sequence is called a head
+- The mutil-head attention is basically computing self-attention for a sequence mutiple times, and it can be computed in parallel
+- Suppose h = number of heads, and i = 1, 2, ..., h
+- Given the vectors $q^{\langle t \rangle}, k^{\langle t \rangle}, v^{\langle t \rangle}$ for each word in a sequence $(q^{\langle t \rangle} = W^Qx^{\langle t \rangle},\  k^{\langle t \rangle} = W^Kx^{\langle t \rangle},\  v^{\langle t \rangle} = W^Vx^{\langle t \rangle})$
+- With mutil-head attention, there will be a new set of $W_i^Q, W_i^K, W_i^V$ s.t. $W_i^Qq^{\langle t \rangle}, W_i^Kk^{\langle t \rangle}, W_i^Vv^{\langle t \rangle}$
+will be the new query, key, and value vectors for each word.
+- Using the new vectors, each head is calculated as $head_i = Attention(W_i^QQ, W_i^KK, W_i^VV))$
+- Then, we get $$MultiHead(Q, K, V) = concat(head_1, head_2, ..., head_h)W_o$$
+- Think of $W_i^Q, W_i^K, W_i^V$ as being learned to help ask and answer different questions for each head i
+- So the mutil-gead attention lets you ask multiple questions for every single word and learn a much richer representation for each word.
