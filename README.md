@@ -720,14 +720,37 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 - $$Attention(Q, k, V) = Softmax(\frac{QK^T}{\sqrt{d_k}})V \text{ (vectorized representation of the following equation)}$$
 - $$\text{for each q, }A(q, K, V)= \sum_{i} \frac{exp(qk^{\langle i \rangle})}{\sum_{j} exp(qk^{\langle j \rangle})}v^{\langle i \rangle}$$
 
-### Mutil-Head Attention
+### Multi-Head Attention
 - Each time you calculate self-attention for a sequence is called a head
-- The mutil-head attention is basically computing self-attention for a sequence mutiple times, and it can be computed in parallel
+- The multi-head attention is basically computing self-attention for a sequence multiple times, and it can be computed in parallel
 - Suppose h = number of heads, and i = 1, 2, ..., h
 - Given the vectors $q^{\langle t \rangle}, k^{\langle t \rangle}, v^{\langle t \rangle}$ for each word in a sequence $(q^{\langle t \rangle} = W^Qx^{\langle t \rangle},\  k^{\langle t \rangle} = W^Kx^{\langle t \rangle},\  v^{\langle t \rangle} = W^Vx^{\langle t \rangle})$
-- With mutil-head attention, there will be a new set of $W_i^Q, W_i^K, W_i^V$ s.t. $W_i^Qq^{\langle t \rangle}, W_i^Kk^{\langle t \rangle}, W_i^Vv^{\langle t \rangle}$
+- With multi-head attention, there will be a new set of $W_i^Q, W_i^K, W_i^V$ s.t. $W_i^Qq^{\langle t \rangle}, W_i^Kk^{\langle t \rangle}, W_i^Vv^{\langle t \rangle}$
 will be the new query, key, and value vectors for each word.
 - Using the new vectors, each head is calculated as $head_i = Attention(W_i^QQ, W_i^KK, W_i^VV))$
 - Then, we get $$MultiHead(Q, K, V) = concat(head_1, head_2, ..., head_h)W_o$$
 - Think of $W_i^Q, W_i^K, W_i^V$ as being learned to help ask and answer different questions for each head i
-- So the mutil-gead attention lets you ask multiple questions for every single word and learn a much richer representation for each word.
+- So the multi-head attention lets you ask multiple questions for every single word and learn a much richer representation for each word.
+
+### Transformer Network
+- It's useful to add a <SOS> start of sentence and a <EOS> end of sentence token to the input sequence
+- Encoder block
+    - feed the embeddings of each word in the input sequence to a multi-head attention layer
+    - pass the matrix produced by the multi-head attention layer to a feed forward neural network which helps determine what interesting features there are in the sentence
+    - repeat the encoder block N times (typicall N = 6)
+- Feed the output of the encoder to a decoder block
+- Decoder block
+    - words that have been translated (at first, only <SOS>) will be feed to a multi-head attention layer
+    - use the multi-head attention layer to generate a Q matrix, and the ouput of the encoder block will generate K, V matrices
+        - intuition: words that have been translated will query to say what is the start of the sentence, and K, V will pull context from the original sequence to then decide what is the next word in the sequence to generate
+    - feed the new Q, K, V to another multi-head attention layer
+    - feed the matrix produced by the previous multi-head attention layer to a feed forward neural network 
+    - repeat the encoder block N times (typicall N = 6)
+    - after decoder repeated N times, pass the result to linear -> Softmax, and predict the next word in the output sequence 
+
+- Improvements
+    - Add positional encoding vectors to each word
+    - Add Residual connections
+    - Add a Add & Norm Layer after each of the original layers
+    - Masked multi-head attention could be helpful during training
+        - Masked multi-head attention pretends the network has perfectly translated the first few words, and hides the remaining words to see if given perfectly translated first part, whether the neural network can predict the next word in the sequence accurately
