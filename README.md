@@ -717,5 +717,5 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
     - value is the importance of each position in the input
         - it helps to compute how key should be represented within the query
     - $q^{\langle t \rangle} = W^qx^{\langle t \rangle},\  k^{\langle t \rangle} = W^kx^{\langle t \rangle},\  v^{\langle t \rangle} = W^vx^{\langle t \rangle}$
-- $$Attention(Q, k, V) = Softmax(\frac{QK^T}{\sqrt{d_k}})V \text{(vectorized representation of the following equation)}$$
+- $$Attention(Q, k, V) = Softmax(\frac{QK^T}{\sqrt{d_k}})V \text{ (vectorized representation of the following equation)}$$
 - $$\text{for each q, }A(q, K, V)= \sum_{i} \frac{exp(qk^{\langle i \rangle})}{\sum_{j} exp(qk^{\langle j \rangle})}v^{\langle i \rangle}$$
