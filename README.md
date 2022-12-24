@@ -704,7 +704,18 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Intuition
 - In RNN, GRU, and LSTM, the models take the input sentence one word at a time, and to compute an output unit, the models have to compute all units that come before.
 - Transformer network has more computations, but it is designed to parallelize these computations, which makes it more efficient and faster to train. That also allows it to ingest an entire sentence all at the same time, rather than processing it one word at a time from left to right. 
-    - it combines the use of attention based representations (a way of computing very rich, very useful representations of words) and a convolutional neural network style of processing (take input as a lot of pixels, or a lot of words and compute representations for them in parallel) 
+    - it combines the use of attention based representations (used to compute very rich and useful representations of words) and a convolutional neural network style of processing (take input as a lot of pixels, or a lot of words and compute representations for them in parallel) 
 
- ### Self-Attention
-    
+### Self-Attention
+- Compute attention-based representations for each of the words in your input sentence.
+- Look at the surrounding words to try to figure out what's actually going on in each word in the sentence, and find the most appropriate representation for each word.
+- For every word, there are three values: query, key, and value. 
+    - query is the current position in the input that the attention mechanism is focusing on
+        - it asks a question about the word on the current position
+    - key is the different positions in the input that the attention mechanism can attend to.
+        - it looks at all the other words and helps to figure out what's the answer to the question
+    - value is the importance of each position in the input
+        - it helps to compute how key should be represented within the query
+    - $q^{\langle t \rangle} = W^qx^{\langle t \rangle},\  k^{\langle t \rangle} = W^kx^{\langle t \rangle},\  v^{\langle t \rangle} = W^vx^{\langle t \rangle}$
+- $$Attention(Q, k, V) = Softmax(\frac{QK^T}{\sqrt{d_k}})V$$ (vectorized representation of the following equation)
+- for each specific q, $$A(q, K, V)= \sum_{i} \frac{exp(qk^{\langle i \rangle})}{\sum_{j} exp(qk^{\langle j \rangle})}v^{\langle i \rangle}$$
