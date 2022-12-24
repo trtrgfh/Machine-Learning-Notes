@@ -701,8 +701,10 @@ Designed to process sequential data, e.g. speech recognition, sentiment classifi
 ### Trigger Word Detection
 
 ## Transformer Network <a name="transformer"></a> 
+### Intuition
 - In RNN, GRU, and LSTM, the models take the input sentence one word at a time, and to compute an output unit, the models have to compute all units that come before.
-- Transformer network allows you to run a lot more of these computations for an entire sequence in parallel, and ingest an entire sentence all at the same time, rather than just processing it one word at a time from left to right. 
-- Combining the use of attention based representations and a CNN convolutional neural network style of processing
-- Take input a lot of pixels, or a lot of words and can compute representations for them in parallel. 
-- A way of computing very rich, very useful representations of words. But with something more akin to this CNN style of parallel processing. 
+- Transformer network has more computations, but it is designed to parallelize these computations, which makes it more efficient and faster to train. That also allows it to ingest an entire sentence all at the same time, rather than processing it one word at a time from left to right. 
+    - it combines the use of attention based representations (a way of computing very rich, very useful representations of words) and a convolutional neural network style of processing (take input as a lot of pixels, or a lot of words and compute representations for them in parallel) 
+
+ ### Self-Attention
+    
