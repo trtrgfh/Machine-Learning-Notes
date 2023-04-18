@@ -159,9 +159,10 @@ Where (i,j) indicates whether user j has rated item i, $v_u$ is the output vecte
 - gradient is a measure of how much the output of a function changes when you change the inputs, and it's usually represented as a vector of partial derivatives
 - Proper weight initialization can help speed up training, improve the network's ability to learn, and prevent issues such as vanishing or exploding gradients
 - In deep network (large number of layers), if $W^{[L]} > I$(Identity Matrix) the value of predicted y could be large (explode), $W^{[L]} < I$ the value of predicted y could be too small (vanish)
-- For ReLU activation, use $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]}})$
-- For tanh activation, use $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{1}{n^{[l-1]}})$ (Xavier initialization)
-- OR $W^{[l]} = np.random.rand(shape) + np.sqrt(\frac{2}{n^{[l-1]} + n^{[l]}})$
+- For ReLU activation, use $W^{[l]} = np.random.rand(shape) * np.sqrt(\frac{2}{n^{[l-1]}})$
+- For tanh activation, use $W^{[l]} = np.random.rand(shape) * np.sqrt(\frac{1}{n^{[l-1]}})$ (Xavier initialization)
+- OR $W^{[l]} = np.random.rand(shape) * np.sqrt(\frac{2}{n^{[l-1]} + n^{[l]}})$
+- n is the number of units/neurons in some layer l
 
 ### Gradient Checking <a name="gradientcheck"></a>
 - Take $W^{[1]}, b^{[1]}, W^{[l]}, b^{[l]}$ and $dW^{[1]}, db^{[1]}, dW^{[l]}, db^{[l]}$, and reshape them into vectors $\theta$ and $d\theta$
