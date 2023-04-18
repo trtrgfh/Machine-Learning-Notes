@@ -1,6 +1,6 @@
 # Machine-Learning
 Field of study that gives conputers the ability to learn without explicit programed
-
+This file will explain some of the fundamental and advanced concepts in machine learning and deep learning which could be useful as a quick recap in the future
 ## Table of contents
 1. [Supervised Learning](#supervisedlearning)
     1. [Linear Regression](#linearregression)
