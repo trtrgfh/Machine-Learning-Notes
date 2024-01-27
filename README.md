@@ -76,7 +76,7 @@ One downside of using only one decision tree is that small changes in the traini
     - $dZ^{[l]} = A^{[l]} - Y$, where shape of $dZ^{[l]}$ is $(n^{[l]}, m)$
     - $dW^{[l]} = \frac{1}{m}dZ^{[l]}A^{[l-1]T} (L2 reg: +\frac{\lambda}{m}W^{[l]})$, where shape of $dW^{[l]}$ is $(n^{[l]}, n^{[l-1]})$
     - $db^{[l]} = \frac{1}{m}np.sum(dZ^{[l]},\  axis=1,\  keepdims=True)$, where shape of $db^{[l]}$ is $(n^{[l]}, 1)$
-    - $dA^{[l-1]} = W^{[l]T}dZ^{[l]} * g^{'[l-1]}(Z^{[l-1]})$, where shape of $dA^{[l]}$ is $(n^{[l]}, m)$
+    - $dZ^{[l-1]} = W^{[l]T}dZ^{[l]} * g^{'[l-1]}(Z^{[l-1]})$, where shape of $dZ^{[l]}$ is $(n^{[l]}, m)$
 - Gradient Descent:
     - $W^{[l]} = W^{[l]} - \alpha dW^{[l]}$, where shape of $W^{[l]}$ is $(n^{[l]}, n^{[l-1]})$
     - $b^{[l]} = b^{[l]} - \alpha db^{[l]}$, where shape of $b^{[l]}$ is $(n^{[l]}, 1)$
