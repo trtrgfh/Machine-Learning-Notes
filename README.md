@@ -6,7 +6,7 @@ This file explains some of the fundamental and advanced concepts in machine lear
     1. [Linear Regression](#linearregression)
     2. [Logistic Regression](#logisticregression)
     3. [Decision Trees](#decisiontrees)
-    4. [Neural Networks](#neuralnetworks)
+    4. [Neural Networks](#neuralnetworks) 
 2. [Unsupervised Learning](#unsupervisedlearning)
     1. [K Means Algorithm](#kmeans)
     2. [Anomaly Detection](#anomalydetection)
