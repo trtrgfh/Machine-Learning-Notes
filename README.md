@@ -1,5 +1,5 @@
 # Machine Learning Notes
-ML is the field of study that gives conputers the ability to learn without explicit programed. <br>
+ML is the field of study that gives computers the ability to learn without explicit programed. <br>
 This file explains some of the fundamental and advanced concepts in machine learning and deep learning which could be useful as a quick recap.
 ## Table of contents
 1. [Supervised Learning](#supervisedlearning)
